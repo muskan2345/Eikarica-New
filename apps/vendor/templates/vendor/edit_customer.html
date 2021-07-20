@@ -1,0 +1,44 @@
+{% extends 'core/base-new.html' %}
+
+{% load static %}
+
+{% block title %}Edit Profile | {% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'styles/editvendor.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+  </head>
+  <body>
+<style>
+body {
+ 
+ background-color:#20dbc2;
+}
+</style>
+    <h1 class="heading">Edit Profile</h1>
+<center>
+  <form method="post" action="{% url 'edit_customer' %}">
+    {% csrf_token %}
+<div class="box">
+<img src="{% static 'images/edit.svg' %}" width="100%" height="100%">
+<input type="text" placeholder="User Name" value="{{ customer.name }}" name="name" >
+<input type="Email" placeholder="Email ID" value="{{ customer.created_by.email }}" name="email" >
+<input type="password" placeholder="Old Password" name="password">
+<input type="password" placeholder="New Password" name="rpassword">
+<input type="password" placeholder="Confirm Password" name="confirm_password">
+<input type="submit" class="buttonclass" value="Save Profile">
+<a href="{% url 'vendor_admin' %}"><button class="buttonclass" name="done">Cancel</button></a>
+</div>
+</form>
+</center>
+</body>
+</html> 
+{% endblock %}
