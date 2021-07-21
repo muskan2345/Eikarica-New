@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KYC</title>
     <link rel="stylesheet" href="{% static 'styles/vendor_kyc.css' %}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body>
     <center><img src="{% static 'images/W.png' %}" height=180px,width=180px></center>
@@ -20,23 +21,22 @@
        
     <hr>
     <div>
-    <h2>Customer Details</h2>
+    <h2 class="w3-cursive">Vendor Details</h2>
    
-    <p>Name of the Customer: <span style="color: #20dbc2 !important; display: inline; float: none;">*</span>  <input type="text" name="name" required ></p>
+    <p class="w3-cursive">Name of the Customer: <span style="color: #20dbc2 !important; display: inline; float: none;">*</span>  <input type="text" name="name" required ></p>
     &nbsp;
     <fieldset>
-        <legend>Gender <span style="color: #20dbc2 !important; display: inline; float: none;">*</span> </legend>
-    <p>
-       
+        <legend class="w3-cursive">Gender <span style="color: #20dbc2 !important; display: inline; float: none;">*</span> </legend>
+    <p class="w3-cursive">
         Male <input type="radio" name="gender" value="male" required> Female <input type="radio" name="gender" value="female" required> Other <input type="radio" name="gender" value="other" required>
         
     </p>
     
 </fieldset>
 &nbsp;
-<p>Date of Birth: <span style="color: #20dbc2 !important; display: inline; float: none;">*</span>  <input type="date" name="dob" id="dob" required></p>
+<p class="w3-cursive">Date of Birth: <span style="color: #20dbc2 !important; display: inline; float: none;">*</span>  <input type="date" name="dob" id="dob" required></p>
 &nbsp;
-<p>Nationality: <span style="color: #20dbc2 !important; display: inline; float: none;">*</span> 
+<p class="w3-cursive">Nationality: <span style="color: #20dbc2 !important; display: inline; float: none;">*</span> 
     <select name="nationality" required>
     <option value="">-- select one --</option>
     <option value="afghan">Afghan</option>
@@ -233,18 +233,18 @@
     <option value="zimbabwean">Zimbabwean</option>
   </select></p>
   <hr>
-  <h2>Address Details</h2>
+  <h2 class="w3-cursive">Address Details</h2>
   &nbsp;
-<p>HouseNo./Street/Locality: <input type="text" name="address1" required></p>
+<p class="w3-cursive">HouseNo./Street/Locality: <input type="text" name="address1" required></p>
 &nbsp;
-<p>City:  <input type="text" name="address2"  required></p>
+<p class="w3-cursive">City:  <input type="text" name="address2"  required></p>
 &nbsp;
-<p>State/Province:  <input type="text" name="address3" required></p>
+<p class="w3-cursive">State/Province:  <input type="text" name="address3" required></p>
 &nbsp;
-<p> Postal/Zip Code: <input type="number" name="address4" id="posatal code" required></p>
+<p class="w3-cursive"> Postal/Zip Code: <input type="number" name="address4" id="posatal code" required></p>
 &nbsp;
 <div>
-<label for="country">Country</label><span style="color: #20dbc2 !important; display: inline; float: none;">*</span>   
+<label for="country" class="w3-cursive">Country</label><span style="color: #20dbc2 !important; display: inline; float: none;">*</span>   
   
         
             <select  id="country" name="address5" class="form-control" required>
@@ -498,55 +498,55 @@
           </div>
           &nbsp;
       <p>
-  <label for="phone">Enter your phone number:</label>
+  <label for="phone" class="w3-cursive">Enter your phone number:</label>
   <input type="tel" id="phone" name="phone" required>
 </div>
 </p>
 &nbsp;
-<p>Email: <span style="color: #20dbc2 !important; display: inline; float: none;">*</span>  {{vendor.created_by.email}}</p>
+<p class="w3-cursive">Email: <span style="color: #20dbc2 !important; display: inline; float: none;">*</span>  {{vendor.created_by.email}}</p>
 &nbsp;
-    <h4> Proof of Address to be Provided by Applicant <span style="color: #20dbc2 !important; display: inline; float: none;">*</span> </h4>
+    <h4 class="w3-cursive"> Proof of Address to be Provided by Applicant <span style="color: #20dbc2 !important; display: inline; float: none;">*</span> </h4>
     <p class="kk">
     <!-- <form action="/action_page.php"> -->
       <p class="aa">
       <input type="radio" id="a" name="idtype" value="Passport">
-      <label for="a"> Passport</label><br>
+      <label for="a" class="w3-cursive"> Passport</label><br>
       </p>
       <p class="bb">
       <input type="radio" id="b" name="idtype" value="PAN Card">
-      <label for="b">PAN Card</label><br>
+      <label for="b" class="w3-cursive">PAN Card</label><br>
       </p>
     <p class="cc">
       <input type="radio" id="c" name="idtype" value="DL">
-      <label for="c"> Driving License</label><br>
+      <label for="c" class="w3-cursive"> Driving License</label><br>
     </p>
     <p class="dd">
       <input type="radio" id="d" name="idtype" value="Voter ID">
-      <label for="d">Voter Identity Card</label><br>
+      <label for="d" class="w3-cursive">Voter Identity Card</label><br>
     </p>
     <p class="ee">
       <input type="radio" id="e" name="idtype" value="Bank Record">
-      <label for="e">Latest Bank Account Statement/Passbook</label><br>
+      <label for="e" class="w3-cursive">Latest Bank Account Statement/Passbook</label><br>
     </p>
     <p class="ff">
       <input type="radio" id="f" name="idtype" value="Other" checked>
-      <label for="f">Other</label><br><br>
+      <label for="f" class="w3-cursive">Other</label><br><br>
     </p>
     <!-- </form> -->
-   </p>
-    <h4> File Upload <span style="color: #20dbc2 !important; display: inline; float: none;">*</span> </h4>
+    </p>
+    <h4 class="w3-cursive"> File Upload <span style="color: #20dbc2 !important; display: inline; float: none;">*</span> </h4>
     <!-- <form action="upload.php" method="post" enctype="multipart/form-data"> -->
       Upload your Documents here:
       <input type="file" name="document" id="fileToUpload" required>
     
     <!-- </form> -->
     <hr>
-    <h2>Declaration</h2>
-    <div id="text_21" class="form-html" data-component="text">
+    <h2 class="w3-cursive">Declaration</h2>
+    <div id="text_21" class="form-html" data-component="text" class="w3-cursive">
       I hereby declare that the information provided in this form is accurate and complete. I confirm that any information is found incorrect and/or incomplete that leads a violation of regulations may initiate legal actions, and I accept that I am the responsible party for any and all charges, penalties and violations.
     </div>
     &nbsp;
-    <p>Date of Submission: <input type="date" name="dob" id="dob" required></p>
+    <p class="w3-cursive">Date of Submission: <input type="date" name="dob" id="dob" required></p>
     &nbsp;
   
     <input type="submit" value="Submit">
