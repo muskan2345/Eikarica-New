@@ -1,16 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
 
-
-
-.abt_section{
+*{
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+}
+body{
     font-family: 'Playfair Display', serif;
     display: grid;
     background-color: #f4f4f4;
     align-content: center;
     min-height: 100vh;
+}
+section{
     display: grid;
     grid-template-columns: 1fr 1fr;
     min-height: 90vh;
@@ -18,32 +20,34 @@
     margin: 0 auto;
 }
 
-.abt_heading{
+.heading{
     color: #20dbc2;
 }
-.abt_image{
-    background: url("/media/person.jpg") center/cover no-repeat;
+.image{
+    background: url("/media/aboutpage.svg") center/cover no-repeat;
+    width:"160";
+    height:"145";
 }
-.abt_content{
+.content{
     background: #fff;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
 }
-.abt_content h2{
+.content h2{
     text-transform: uppercase;
     font-size: 36px;
     letter-spacing: 6px;
     opacity: 0.9;
 }
-.abt_content span{
+.content span{
     height: 0.5px;
     width: 80px;
     background: #777;
     margin: 30px 0;
 }
-.abt_content p{
+.content p{
     padding-bottom: 15px;
     font-weight: 300;
     opacity: 0.7;
@@ -80,20 +84,20 @@
     background: #777;
     margin: 0 auto;
 }
-.abt_icons{
+.icons{
     display: flex;
     padding: 15px 0;
 }
-.abt_icons li{
+.icons li{
     display: block;
     padding: 5px;
     margin: 5px;
 }
-.abt_icons li i{
+.icons li i{
     font-size: 26px;
     opacity: 0.8;
 }
-.abt_icons li i:hover{
+.icons li i:hover{
     color: #06d6a0;
 }
 
@@ -105,20 +109,20 @@
         grid-template-columns: 1fr;
         width: 100%;
     }
-    .abt_image{
+    .image{
         height: 100vh;
     }
-    .abt_content{
+    .content{
         height: 100vh;
     }
-    .abt_content h2{
+    .content h2{
         font-size: 20px;
         margin-top: 50px;
     }
-    .abt_content span{
+    .content span{
         margin: 20px 0;
     }
-    .abt_content p{
+    .content p{
         font-size: 14px;
     }
     /*.words li a{
@@ -130,7 +134,7 @@
     .words li{
         padding: 6px 10px;
     }
-    .abt_icons li i{
+    .icons li i{
         font-size: 15px;
     }
 }
