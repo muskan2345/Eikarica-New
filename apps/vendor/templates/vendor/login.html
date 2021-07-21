@@ -27,14 +27,14 @@
             {% endfor %}
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="Username" required/>
+              <input type="text" placeholder="Username" name="username" required/>
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Password" required/>
+              <input type="password" placeholder="Password" name="password" required/>
             </div>
             <input type="submit" value="Login" class="btn solid" />
-            <p>Sign in as a Vendor <input type="checkbox"></p>
+            <input type="checkbox" name="loginid" value="vendor" /></p>
             <p class="social-text">Or Sign in with social platforms</p>
             <div class="social-media">
               <a href="#" class="social-icon">
@@ -57,18 +57,19 @@
             <h2 class="title">Sign up</h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="Username" required/>
+              <input type="text" placeholder="Username" name="username" required/>
             </div>
             <div class="input-field">
               <i class="fas fa-envelope"></i>
-              <input type="email" placeholder="Email" required/>
+              <input type="email" placeholder="Email" name="email" required/>
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Password" required/>
+              <input type="password" placeholder="Password" name="password" required/>
             </div>
             <input type="submit" class="btn" value="Sign up" />
-            <p>Sign up as a Vendor <input type="checkbox"></p>
+            <p class="social-text">Sign Up as a Vendor ?
+                <input type="checkbox" name="loginid" value="vendor" /></p>
             <p class="social-text">Or Sign up with social platforms</p>
             <div class="social-media">
               <a href="#" class="social-icon">
