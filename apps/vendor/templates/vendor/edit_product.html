@@ -62,6 +62,9 @@
               <input type="file" accept="image" class = "form-control" name="image" id="img" value="{{product.description}}" style="display:none;"/>
               <label for="img" class = "form-control file-upload-text">Click me to upload product image</label>
               <input type = "number" class = "form-control" placeholder="Price" name="price" value="{{product.price}}">
+
+              <input type = "text" class = "form-control" placeholder="Dimensions (l x b x h)" name="dimensions" value="{{product.dimensions}}">
+              <input type = "number" class = "form-control" placeholder="Weight (in kg)" name="weight" value="{{product.weight}}">
               
             </div>
             <textarea rows = "5" placeholder="Product Details" class = "form-control" name="description"  value="{{product.description}}"></textarea>
