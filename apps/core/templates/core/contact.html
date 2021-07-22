@@ -43,16 +43,18 @@
         </div>
 
         <div class = "contact-form">
-          <form>
+          <form action="https://formspree.io/f/xbjqabdd"
+          method="POST"
+          enctype="multipart/form-data">
             <div>
-              <input type = "text" class = "form-control" placeholder="First Name">
-              <input type = "text" class = "form-control" placeholder="Last Name">
+              <input type = "text" class = "form-control" placeholder="First Name" name="first" required>
+              <input type = "text" class = "form-control" placeholder="Last Name" name="last" required>
             </div>
             <div>
-              <input type = "email" class = "form-control" placeholder="E-mail">
+              <input type = "email" class = "form-control" placeholder="E-mail" name="email" required>
               <input type = "text" class = "form-control" placeholder="Phone">
             </div>
-            <textarea rows = "5" placeholder="Message" class = "form-control"></textarea>
+            <textarea rows = "5" placeholder="Message" class = "form-control" name="message" required></textarea>
             <input type = "submit" class = "send-btn" value = "send message">
           </form>
 

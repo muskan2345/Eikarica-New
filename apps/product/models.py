@@ -23,11 +23,14 @@ class Product(models.Model):
     title = models.CharField(max_length=255)
     quantity = models.IntegerField(default=1)
     slug = models.SlugField(max_length=255)
-    description = models.TextField(blank=True, null=True)
+    description = models.TextField(max_length = 10000, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     date_added = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(upload_to='uploads/', blank=True, null=True)
+    
     thumbnail = models.ImageField(upload_to='uploads/', blank=True, null=True)
+    dimensions = models.CharField(max_length=50)
+    weight = models.DecimalField(max_digits=10, decimal_places=2, null=True)
 
     class Meta:
         ordering = ['-date_added']

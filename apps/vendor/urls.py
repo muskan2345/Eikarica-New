@@ -2,6 +2,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import path,include
 from apps.core.views import frontpage
 from . import views
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('become-vendor/', views.become_vendor, name='become_vendor'),
@@ -19,6 +20,7 @@ urlpatterns = [
     path('<int:vendor_id>/', views.vendor, name='vendor'),
     path('vendor-admin/home/', frontpage, name='frontpage'),
     path('vendor-kyc/', views.vendor_kyc, name='vendor_kyc'),
+    #path('',views.confirm,name='confirm'),
 
 
 

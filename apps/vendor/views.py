@@ -18,6 +18,9 @@ from .forms import ProductForm, ProductImageForm
 
 #     return render(request, 'core/frontpage.html', {'newest_products': newest_products})
 
+def confirm(request):
+    return redirect('vendor_kyc')
+
 
 
 def user_login(request,*args,**kwargs):
@@ -178,6 +181,9 @@ def add_product(request):
         product.image=request.FILES.get('image')
         product.vendor = request.user.vendor
         product.quantity = request.POST.get('quantity')
+        
+        product.dimensions = request.POST.get('dimensions')
+        product.weight = request.POST.get('weight')
 
         str=product.title + "-" + product.vendor.name
         product.slug = slugify(str)
@@ -204,6 +210,10 @@ def edit_product(request,pk):
         product.price= request.POST.get('price')
         image=request.FILES.get('image')
         product.quantity = request.POST.get('quantity')
+
+        product.dimensions = request.POST.get('dimensions')
+        product.weight = request.POST.get('weight')
+        
         if (image!=None):
             product.image=image
         product.vendor = vendor
