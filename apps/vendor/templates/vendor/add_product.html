@@ -22,18 +22,18 @@
             {% csrf_token %}
             {{form.as_p}}
             <div>
-              <input type = "text" class = "form-control" placeholder="Product Name" name="title">
-              <input type = "number" class = "form-control" placeholder="Product Quantity" name="quantity" value="1">
+              <input type = "text" class = "form-control" placeholder="Product Name" name="title" required>
+              <input type = "number" class = "form-control" placeholder="Product Quantity" name="quantity" required>
             </div>
             <div>
               <!-- <input type = "file" accept="image" class = "form-control" placeholder="Product image"> -->
-              <input type="file" accept="image" class = "form-control" name="image" id="img" style="display:none;"/>
-              <label for="img" class = "form-control file-upload-text">Click me to upload product image</label>
-              <input type = "number" class = "form-control" placeholder="Price" name="price">
-
-              <input type = "text" class = "form-control" placeholder="Dimensions (l x b x h)" name="dimensions">
-              <input type = "number" class = "form-control" placeholder="Weight (in kg)" name="weight">
-
+              <input type="file" accept="image" class = "form-control" name="image" id="img" style="display:none;" required/>
+              <label for="img" class = "form-control file-upload-text">Image</label>
+              <input type = "number" step="any" class = "form-control" placeholder="Price" name="price" required>
+              <input type = "number" step="any" class = "form-control" placeholder="Length" name="length" required>
+              <input type = "number" step="any" class = "form-control" placeholder="Breadth" name="breadth" required>
+              <input type = "number" step="any" class = "form-control" placeholder="Height" name="height" required>
+              <input type = "number" step="any" class = "form-control" placeholder="Weight (in kg)" name="weight" required>
             </div>
             <textarea rows = "5" placeholder="Product Details" class = "form-control" name="description"></textarea>
             <input type = "submit" class = "send-btn" value = "Add Product">

@@ -46,25 +46,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
   </head>
   <body>
-    <h1 class="heading">Edit Product</h1>
+    <h1 class="heading" style="font-size: xx-large; font-weight: bold;">Edit Product</h1>
     <div class = "product-form">
-          <form class="product" method="POST" action="{% url 'edit_product'  pk=form.instance.pk %}" enctype="multipart/form-data">
+          <form class="product" method="post" action="{% url 'edit_product'  pk=form.instance.pk %}" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.as_p }}
+            <p style="color: #20dbc2; font-weight: bold;">Category: {{product.category}}</p>
             <div>
-
               <!-- <input type = "text" class = "form-control" placeholder="Category"> -->
-              <input type = "text" class = "form-control" placeholder="Product Name" name="title" value="{{product.title}}">
-              <input type = "number" class = "form-control" placeholder="Product Quantity" name="quantity" value="{{product.quantity}}">
+              <input type = "text" class = "form-control" placeholder="Product Name" name="title" value="{{product.title}}" required>
+              <input type = "number" class = "form-control" placeholder="Product Quantity" name="quantity" value="{{product.quantity}}"  required>
             </div>
             <div>
               <!-- <input type = "file" accept="image" class = "form-control" placeholder="Product image"> -->
-              <input type="file" accept="image" class = "form-control" name="image" id="img" value="{{product.description}}" style="display:none;"/>
-              <label for="img" class = "form-control file-upload-text">Click me to upload product image</label>
-              <input type = "number" class = "form-control" placeholder="Price" name="price" value="{{product.price}}">
+              <input type="file" accept="image" class = "form-control" name="image" id="img" value="{{product.description}}" style="display:none;" required/>
+              <label for="img" class = "form-control file-upload-text">Image</label>
+              <input type = "number" class = "form-control" placeholder="Price" name="price" value="{{product.price}}"  required>
 
-              <input type = "text" class = "form-control" placeholder="Dimensions (l x b x h)" name="dimensions" value="{{product.dimensions}}">
-              <input type = "number" class = "form-control" placeholder="Weight (in kg)" name="weight" value="{{product.weight}}">
+              <input type = "number" class = "form-control" placeholder="Length" name="length" value="{{product.length}}" required>
+              <input type = "number" class = "form-control" placeholder="Breadth" name="breadth" value="{{product.breadth}}" required>
+              <input type = "number" class = "form-control" placeholder="Height" name="height" value="{{product.height}}" required>
+              <input type = "number" class = "form-control" placeholder="Weight (in kg)" name="weight" value="{{product.weight}}"  required>
               
             </div>
             <textarea rows = "5" placeholder="Product Details" class = "form-control" name="description"  value="{{product.description}}"></textarea>
