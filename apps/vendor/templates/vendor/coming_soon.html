@@ -1,0 +1,45 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">        
+        <title>Comming Soon</title>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Chela+One|Markazi+Text" rel="stylesheet"> 
+        <link rel="stylesheet" href="{% static 'styles/coming_soon/bootstrap.css' %}">
+        <link href="{% static 'styles/coming_soon/custom.css' %}" rel="stylesheet">
+        <link href="{% static 'styles/coming_soon/responsive.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <div id="full_width">
+            <div class="inner_content">
+                <div class="content_middel">
+                    <img src="{% static 'img/logo.jpeg' %}" class="logo-image" alt="" />
+                    <h1>Comming Soon</h1>
+                    <h3>Stay Tuned</h3>
+                    <div class="form">
+
+                        <p>Absolutely. Positively. Perfect</p>
+                    </div>
+                    <div class="socal_area">
+                        <ul>
+                            <li><a href="https://www.facebook.com/techmihirnaik/"><i class="fab fa-facebook"></i></a></li>
+                            <li><a href="https://www.instagram.com/techmihirnaik/"><i class="fab fa-instagram"></i></a></li>
+                            <li><a href="mailto:hello@techmihirnaik.in"><i class="fab fa-google-plus"></i></a></li>
+                            <li><a href="https://www.linkedin.com/company/techmihirnaik/mycompany/"><i class="fab fa-linkedin-in"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="{% static 'scripts/coming_soon/jquery.min.js' %}"></script>
+        <script src="{% static 'scripts/coming_soon/scrollUp.min.js' %}"></script>
+        <script src="{% static 'scripts/coming_soon/bootstrap.js' %}"></script>
+        <script src="{% static 'scripts/coming_soon/plugins' %}"></script>
+        <script src="{% static 'scripts/coming_soon/main.js' %}"></script>
+    </body>
+</html>

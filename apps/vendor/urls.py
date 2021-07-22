@@ -20,6 +20,7 @@ urlpatterns = [
     path('<int:vendor_id>/', views.vendor, name='vendor'),
     path('vendor-admin/home/', frontpage, name='frontpage'),
     path('vendor-kyc/', views.vendor_kyc, name='vendor_kyc'),
+    path('coming-soon/', views.coming_soon, name='coming_soon'),
     #path('',views.confirm,name='confirm'),
 
 

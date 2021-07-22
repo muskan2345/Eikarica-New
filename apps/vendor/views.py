@@ -55,21 +55,22 @@ def user_login(request,*args,**kwargs):
                 messages.error(request,'username or password not correct')
                 return redirect('user_login')
         else:
-            if user:
-                #Check it the account is active
-                if user.is_active:
-                    # Log the user in.
-                    login(request,user)
-                    # Send the user back to some page.
-                    # In this case their homepage.
-                    return redirect('vendors')
-                    #return HttpResponseRedirect(reverse('core/frontpage.html'))
-                else:
-                    # If account is not active:
-                    return HttpResponse("Your account is not active.")
-            else:
-                messages.error(request,'username or password not correct')
-                return redirect('user_login')
+            return redirect('coming_soon')
+            # if user:
+            #     #Check it the account is active
+            #     if user.is_active:
+            #         # Log the user in.
+            #         login(request,user)
+            #         # Send the user back to some page.
+            #         # In this case their homepage.
+            #         return redirect('vendors')
+            #         #return HttpResponseRedirect(reverse('core/frontpage.html'))
+            #     else:
+            #         # If account is not active:
+            #         return HttpResponse("Your account is not active.")
+            # else:
+            #     messages.error(request,'username or password not correct')
+            #     return redirect('user_login')
 
 
     else:
@@ -112,8 +113,11 @@ def become_vendor(request):
 
                     customer.save()
                     login(request,cus)
-                    return redirect('vendors')
+                    return redirect('coming_soon')
     return render(request, 'vendor/login.html', {})
+
+def coming_soon(request):
+    return render(request, 'vendor/coming_soon.html',{})
 
 @login_required
 def vendor_kyc(request):
