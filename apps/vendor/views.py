@@ -18,6 +18,9 @@ from .forms import ProductForm, ProductImageForm
 
 #     return render(request, 'core/frontpage.html', {'newest_products': newest_products})
 
+def confirm(request):
+    return redirect('vendor_kyc')
+
 
 
 def user_login(request,*args,**kwargs):
