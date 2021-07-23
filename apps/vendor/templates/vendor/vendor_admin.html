@@ -10,10 +10,14 @@
     </head>
     <body>
     <div>
-        {% if vendor.verified %}
-            <p style="color:green">KYC verified!</p>
+        {% if vendor.mobile == 0 %}
+            <p style="color:red">Please fill your KYC form!</p>
         {% else %}
-        <p style="color:red">KYC verification pending!</p>
+            {% if vendor.verified %}
+                <p style="color:green">KYC verified!</p>
+            {% else %}
+                <p style="color:red">KYC verification pending!</p>
+            {% endif %}
         {% endif %}
     </div>
     <div class="box">
@@ -22,9 +26,10 @@
         <strong>My paid amount: </strong>₹ {{ vendor.get_paid_amount }}
 
         <hr>
-
-        <a href="{% url 'edit_vendor' %}" class="button is-info is-uppercase" name="loginid" value="vendor">Edit Details</a>
-        <!-- <a href="{% url 'user_logout' %}" class="button is-danger is-uppercase">Log out</a> -->
+        {% if vendor.mobile == 0 %}
+            <a href="{% url 'vendor_kyc' %}" class="button is-info is-uppercase" name="loginid" value="vendor">Fill KYC Form</a>
+        {% endif %}
+            <!-- <a href="{% url 'user_logout' %}" class="button is-danger is-uppercase">Log out</a> -->
     </div>
 
     <div class="box">

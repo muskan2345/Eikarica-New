@@ -113,7 +113,7 @@ section{
         height: 100vh;
     }
     .content{
-        height: 100vh;
+        height: 100%;
     }
     .content h2{
         font-size: 20px;

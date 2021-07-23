@@ -49,7 +49,7 @@ input[type="submit"]{
     margin-left:left;
 }
 
-input[type="cancel"]{
+input[type="button"]{
     background-color: grey;
     color: white;
     padding: 12px 20px;
@@ -57,11 +57,11 @@ input[type="cancel"]{
     border-radius: 4px;
     cursor: pointer;
     width: 30%;
-    text-align: left;
+    text-align: center;
     }
 input[type="submit"]:hover{
     background-color: green;
 }
-input[type="cancel"]:hover{
+input[type="button"]:hover{
     background-color: red;
 }
