@@ -8,6 +8,31 @@
     <title>KYC</title>
     <link rel="stylesheet" href="{% static 'styles/vendor_kyc.css' %}">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script>
+      Filevalidation = () => {
+          const fi = document.getElementById('fileToUpload');
+          // Check if any file is selected.
+          if (fi.files.length > 0) {
+              for (const i = 0; i <= fi.files.length - 1; i++) {
+                  const fsize = fi.files.item(i).size;
+                  const file = Math.round((fsize / 1024));
+                  // The size of the file.
+                  if (file >= 250) {
+                      alert(
+                        "File too Big, please upload a file less than 250KB");
+                        document.getElementById('error-size').style.color = 'red';
+                        document.getElementById('error-size').innerHTML = 'File size should be less than 250KB';
+                        document.getElementById('submit-button').disabled = true;
+                  }
+                  else {
+                        document.getElementById('error-size').style.color = 'green';
+                        document.getElementById('error-size').innerHTML = 'This will work!';
+                        document.getElementById('submit-button').disabled = false;
+                  }
+              }
+          }
+      }
+    </script>
 </head>
 <body>
     <center><img src="{% static 'images/W.png' %}" height=180px,width=180px></center>
@@ -537,9 +562,10 @@
     <h4 class="w3-cursive"> File Upload <span style="color: #20dbc2 !important; display: inline; float: none;">*</span> </h4>
     <!-- <form action="upload.php" method="post" enctype="multipart/form-data"> -->
       Upload your Documents here:
-      <input type="file" name="document" id="fileToUpload" required>
+      <input type="file" name="document" id="fileToUpload" onchange="Filevalidation()" required>
     
     <!-- </form> -->
+    <div id="error-size"></div>
     <hr>
     <h2 class="w3-cursive">Declaration</h2>
     <div id="text_21" class="form-html" data-component="text" class="w3-cursive">
@@ -548,7 +574,7 @@
     &nbsp;
     <p class="w3-cursive">Date of Submission: <input type="date" name="dob" id="dob" required></p>
     &nbsp;
-    <input type="submit" value="Submit">
+    <input type="submit" id="submit-button" value="Submit">
 
     &nbsp;
 </form>
