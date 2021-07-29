@@ -17,11 +17,11 @@
                   const fsize = fi.files.item(i).size;
                   const file = Math.round((fsize / 1024));
                   // The size of the file.
-                  if (file >= 250) {
+                  if (file >= 70) {
                       alert(
-                        "File too Big, please upload a file less than 250KB");
+                        "File too Big, please upload a file less than 70KB");
                         document.getElementById('error-size').style.color = 'red';
-                        document.getElementById('error-size').innerHTML = 'File size should be less than 250KB';
+                        document.getElementById('error-size').innerHTML = 'File size should be less than 70KB';
                         document.getElementById('submit-button').disabled = true;
                   }
                   else {
@@ -562,7 +562,7 @@
     <h4 class="w3-cursive"> File Upload <span style="color: #20dbc2 !important; display: inline; float: none;">*</span> </h4>
     <!-- <form action="upload.php" method="post" enctype="multipart/form-data"> -->
       Upload your Documents here:
-      <input type="file" name="document" id="fileToUpload" onchange="Filevalidation()" required>
+      <input type="file" name="document" id="fileToUpload" accept="image/*" onchange="Filevalidation()" required>
     
     <!-- </form> -->
     <div id="error-size"></div>
