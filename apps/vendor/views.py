@@ -210,7 +210,7 @@ def edit_product(request,pk):
         product.title= request.POST.get('title')
         product.description= request.POST.get('description')
         product.price= request.POST.get('price')
-        image=request.FILES.get('image')
+        product.image=request.FILES.get('image')
         product.quantity = request.POST.get('quantity')
         product.length = request.POST.get('length')
         product.breadth = request.POST.get('breadth')
@@ -224,9 +224,13 @@ def edit_product(request,pk):
         product.save()
         print("00")
         return redirect('vendor_admin')
-    form = ProductForm(instance=product)    
+    form = ProductForm(instance=product)  
+    if form.is_valid:
+        form.save()
+    #form = ProductForm()  
     #return redirect('vendor_admin')
     return render(request, 'vendor/edit_product.html',{'form':form, 'product': product}) 
+    #return render(request, 'vendor/edit_product.html',{'form':form,}) 
 
 @login_required
 def delete_product(request,pk):
@@ -240,43 +244,44 @@ def delete_product(request,pk):
 # finally completed @Muskan Gupta
 @login_required
 def edit_vendor(request):
-    return redirect('coming_soon')
-    # vendor = request.user.vendor
-    # product = vendor.products.all() 
-    # print(type(product))
-    # list1=list(product)
-    # print(list1)
-    # #product=product.objects.all().values('vendor')
+    # return redirect('coming_soon')
+    vendor = request.user.vendor
+    product = vendor.products.all() 
+    print(type(product))
+    list1=list(product)
+    print(list1)
+    #product=product.objects.all().values('vendor')
 
-    # if request.method == 'POST':
-    #     name = request.POST.get('name')
-    #     email = request.POST.get('email')
-    #     password = request.POST.get('password')
-    #     rpassword=request.POST.get('rpassword')
-    #     confirm_password=request.POST.get('confirm_password')
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        rpassword=request.POST.get('rpassword')
+        confirm_password=request.POST.get('confirm_password')
 
-    #     if password == vendor.password:
-            
-    #         if rpassword==confirm_password:
+        if password == vendor.password:
+            print("test1")
+            if rpassword==confirm_password:
 
-    #             #user_login(name,email,)
-    #             vendor.created_by.delete()
-    #             user = User.objects.create_user(name, email, rpassword)
-    #             vendor = Vendor(name=name, email=email, password=rpassword, created_by=user)
-    #             vendor.save()
-    #             #product.vendor=vendor
+                #user_login(name,email,)
+                vendor.created_by.delete()
+                user = User.objects.create_user(name, email, rpassword)
+                vendor = Vendor(name=name, email=email, password=rpassword, created_by=user)
+                vendor.save()
+                #product.vendor=vendor
                 
-    #             for i in list1:
-    #                 i.vendor=vendor
-    #                 i.save()
-    #             #product.save()
-    #             logout(request)
-    #             return redirect('user_login')
-    #     else:
-    #         messages.error(request,"not saved")
-    #         #return redirect('vendor_admin')
+                for i in list1:
+                    i.vendor=vendor
+                    i.save()
+                #product.save()
+                logout(request)
+                return redirect('user_login')
+        else:
+            print("not saved")
+            #messages.error(request,"not saved")
+            return redirect('vendor_admin')
     
-    # return render(request, 'vendor/edit_vendor.html', {'vendor':vendor})
+    return render(request, 'vendor/edit_vendor.html', {'vendor':vendor})
     #return render(request, 'vendor/edit_vendor.html', {})
 
 def edit_customer(request):

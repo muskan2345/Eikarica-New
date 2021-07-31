@@ -59,7 +59,7 @@
             <div>
               <!-- <input type = "file" accept="image" class = "form-control" placeholder="Product image"> -->
               <input type="file" accept="image" class = "form-control" name="image" id="img" value="{{product.description}}" style="display:none;" required/>
-              <label for="img" class = "form-control file-upload-text">Image</label>
+              <label for="img" class = "form-control file-upload-text" required>Image</label>
               <input type = "number" class = "form-control" placeholder="Price" name="price" value="{{product.price}}"  required>
 
               <input type = "number" class = "form-control" placeholder="Length" name="length" value="{{product.length}}" required>
@@ -68,9 +68,13 @@
               <input type = "number" class = "form-control" placeholder="Weight (in kg)" name="weight" value="{{product.weight}}"  required>
               
             </div>
-            <textarea rows = "5" placeholder="Product Details" class = "form-control" name="description"  value="{{product.description}}"></textarea>
-            <input type = "submit" class = "send-btn" value = "Edit Product">
-            <a href="{% url 'vendors'  %}"><button class = "cancel-btn" name="done">Cancel</button></a>
+            <textarea rows = "5" placeholder="Product Details" class = "form-control" name="description"  value="{{product.description}}" required></textarea>
+          <!-- <a href="{% url 'vendor_admin' %}" class ="send-btn" name="edit product" value= "Edit product"></a> -->
+          <!-- <input type="checkbox" name="loginid" value="vendor" /></p> -->
+          <input type = "submit" class = "send-btn" value = "Edit Product"> 
+            <!-- <a href="{% url 'vendors'  %}"><button class = "send-btn" name="done" value="Edit Product"></button></a> -->
+            <!-- <a href="{% url 'vendors'  %}"><button class = "cancel-btn" name="done">Cancel</button></a> -->
+            <a href="{% url 'vendor_admin'  %}" class = "cancel-btn" name="done">Cancel</a>
           </form>
           <div>
             <img src ="{% static 'img/edit-product.svg' %}"  alt = "">
