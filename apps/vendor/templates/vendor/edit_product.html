@@ -49,7 +49,9 @@
     <h1 class="heading" style="font-size: xx-large; font-weight: bold;">Edit Product</h1>
     <div class = "product-form">
           <form class="product" method="post" action="{% url 'edit_product'  pk=form.instance.pk %}" enctype="multipart/form-data">
+            
             {% csrf_token %}
+            <!-- {{form.as_p}} -->
             <p style="color: #20dbc2; font-weight: bold;">Category: {{product.category}}</p>
             <div>
               <!-- <input type = "text" class = "form-control" placeholder="Category"> -->
@@ -69,19 +71,18 @@
               
             </div>
             <textarea rows = "5" placeholder="Product Details" class = "form-control" name="description"  value="{{product.description}}" required></textarea>
-          <!-- <a href="{% url 'vendor_admin' %}" class ="send-btn" name="edit product" value= "Edit product"></a> -->
-          <!-- <input type="checkbox" name="loginid" value="vendor" /></p> -->
+   
           <input type = "submit" class = "send-btn" value = "Edit Product"> 
-            <!-- <a href="{% url 'vendors'  %}"><button class = "send-btn" name="done" value="Edit Product"></button></a> -->
-            <!-- <a href="{% url 'vendors'  %}"><button class = "cancel-btn" name="done">Cancel</button></a> -->
-            <a href="{% url 'vendor_admin'  %}" class = "cancel-btn" name="done">Cancel</a>
+          <a href="{% url 'vendor_admin'  %}" class = "cancel-btn" name="done">Cancel</a>
+      
           </form>
+           <!-- <a href="{% url 'delete_product'  pk=form.instance.pk %}"><button class = "delete-btn">Delete Product</button></a> -->
           <div>
             <img src ="{% static 'img/edit-product.svg' %}"  alt = "">
           </div>
-          <div>
+           <div>
             <a href="{% url 'delete_product'  pk=form.instance.pk %}"><button class = "delete-btn">Delete Product</button></a>
-          </div>
+          </div> 
         </div>
 
         

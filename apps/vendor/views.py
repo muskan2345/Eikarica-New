@@ -206,11 +206,11 @@ def edit_product(request,pk):
     if request.method == 'POST':
         print("001")
         form = ProductForm(request.POST,instance=product)
-        product = form.save(commit=False)
+        product = form.save(commit=True)
         product.title= request.POST.get('title')
         product.description= request.POST.get('description')
         product.price= request.POST.get('price')
-        product.image=request.FILES.get('image')
+        image=request.FILES.get('image')
         product.quantity = request.POST.get('quantity')
         product.length = request.POST.get('length')
         product.breadth = request.POST.get('breadth')
@@ -225,10 +225,6 @@ def edit_product(request,pk):
         print("00")
         return redirect('vendor_admin')
     form = ProductForm(instance=product)  
-    if form.is_valid:
-        form.save()
-    #form = ProductForm()  
-    #return redirect('vendor_admin')
     return render(request, 'vendor/edit_product.html',{'form':form, 'product': product}) 
     #return render(request, 'vendor/edit_product.html',{'form':form,}) 
 
