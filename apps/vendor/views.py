@@ -202,11 +202,14 @@ def add_product(request):
 def edit_product(request,pk):
     vendor = request.user.vendor
     product = vendor.products.get(pk=pk) 
-    print(request.FILES.get('image'))
+    #print(request.FILES.get('image'))
     if request.method == 'POST':
         print("001")
         form = ProductForm(request.POST,instance=product)
-        product = form.save(commit=True)
+        print("002")
+        
+        product = form.save(commit=False)
+           
         product.title= request.POST.get('title')
         product.description= request.POST.get('description')
         product.price= request.POST.get('price')
@@ -222,9 +225,13 @@ def edit_product(request,pk):
         str1=product.title + "-" + product.vendor.name
         product.slug = slugify(str1)
         product.save()
+
+        product = form.save(commit=True)
         print("00")
+        
         return redirect('vendor_admin')
-    form = ProductForm(instance=product)  
+    form = ProductForm(instance=product) 
+    print('terminate') 
     return render(request, 'vendor/edit_product.html',{'form':form, 'product': product}) 
     #return render(request, 'vendor/edit_product.html',{'form':form,}) 
 
