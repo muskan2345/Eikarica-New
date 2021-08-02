@@ -55,22 +55,22 @@ def user_login(request,*args,**kwargs):
                 messages.error(request,'username or password not correct')
                 return redirect('user_login')
         else:
-            return redirect('coming_soon')
-            # if user:
-            #     #Check it the account is active
-            #     if user.is_active:
-            #         # Log the user in.
-            #         login(request,user)
-            #         # Send the user back to some page.
-            #         # In this case their homepage.
-            #         return redirect('vendors')
-            #         #return HttpResponseRedirect(reverse('core/frontpage.html'))
-            #     else:
-            #         # If account is not active:
-            #         return HttpResponse("Your account is not active.")
-            # else:
-            #     messages.error(request,'username or password not correct')
-            #     return redirect('user_login')
+            #return redirect('coming_soon')
+            if user:
+                #Check it the account is active
+                if user.is_active:
+                    # Log the user in.
+                    login(request,user)
+                    # Send the user back to some page.
+                    # In this case their homepage.
+                    return redirect('vendors')
+                    #return HttpResponseRedirect(reverse('core/frontpage.html'))
+                else:
+                    # If account is not active:
+                    return HttpResponse("Your account is not active.")
+            else:
+                messages.error(request,'username or password not correct')
+                return redirect('user_login')
 
 
     else:
@@ -113,7 +113,7 @@ def become_vendor(request):
 
                     customer.save()
                     login(request,cus)
-                    return redirect('coming_soon')
+                    return redirect('vendors')
     return render(request, 'vendor/login.html', {})
 
 def coming_soon(request):
@@ -288,36 +288,35 @@ def edit_vendor(request):
     #return render(request, 'vendor/edit_vendor.html', {})
 
 def edit_customer(request):
-    if(request.user.vendor):
-        return redirect('vendor_admin')
-    return redirect('coming_soon')
-    # customer = request.user.customer
-    # if request.method == 'POST':
-    #     name = request.POST.get('name')
-    #     email = request.POST.get('email')
-    #     password = request.POST.get('password')
-    #     rpassword=request.POST.get('rpassword')
-    #     confirm_password=request.POST.get('confirm_password')
-    #     if password == customer.password:
+    # if(request.user.vendor):
+    #     return redirect('vendor_admin')
+    customer = request.user.customer
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        rpassword=request.POST.get('rpassword')
+        confirm_password=request.POST.get('confirm_password')
+        if password == customer.password:
             
-    #         if rpassword==confirm_password:
+            if rpassword==confirm_password:
 
-    #             #user_login(name,email,)
-    #             customer.created_by.delete()
-    #             user = User.objects.create_user(name, email, rpassword)
-    #             customer = Customer(name=name, email=email, password=rpassword, created_by=user)
-    #             customer.save()
-    #             #product.vendor=vendor
-    #             # for i in list1:
-    #             #     i.customer=customer
-    #             #     i.save()
-    #             #product.save()
-    #             logout(request)
-    #             return redirect('user_login')
-    #     else:
-    #         messages.error(request,"not saved")
-    #         #return redirect('vendor_admin')
-    # return render(request, 'vendor/edit_customer.html', {'customer':customer})        
+                #user_login(name,email,)
+                customer.created_by.delete()
+                user = User.objects.create_user(name, email, rpassword)
+                customer = Customer(name=name, email=email, password=rpassword, created_by=user)
+                customer.save()
+                #product.vendor=vendor
+                # for i in list1:
+                #     i.customer=customer
+                #     i.save()
+                #product.save()
+                logout(request)
+                return redirect('user_login')
+        else:
+            messages.error(request,"not saved")
+            #return redirect('vendor_admin')
+    return render(request, 'vendor/edit_customer.html', {'customer':customer})        
 
 
 
