@@ -63,7 +63,7 @@ def user_login(request,*args,**kwargs):
                     login(request,user)
                     # Send the user back to some page.
                     # In this case their homepage.
-                    return redirect('vendors')
+                    return redirect('frontpage')
                     #return HttpResponseRedirect(reverse('core/frontpage.html'))
                 else:
                     # If account is not active:
@@ -113,7 +113,7 @@ def become_vendor(request):
 
                     customer.save()
                     login(request,cus)
-                    return redirect('vendors')
+                    return redirect('frontpage')
     return render(request, 'vendor/login.html', {})
 
 def coming_soon(request):
