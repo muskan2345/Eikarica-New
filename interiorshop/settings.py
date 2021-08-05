@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+import smtplib
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,13 +39,20 @@ LOGOUT_REDIRECT_URL = '/'
 SESSION_COOKIE_AGE = 86400
 CART_SESSION_ID = 'cart'
 
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = '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'
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIL_HOST_USER = 'apikey'
+# EMAIL_HOST_PASSWORD = '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'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# DEFAULT_EMAIL_FROM = 'Interiorstore <noreply@codewithstein.com>'
+
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_HOST_USER='eikaricatmn@gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_EMAIL_FROM = 'Interiorstore <noreply@codewithstein.com>'
-
+# EMAIL_HOST_PASSWORD = 'pbkdf2_sha256$180000$AzzpOIEDojip$jMsLaMNE8wIOkdl7SlIMd+DhCiVHA/DNi6fsCDfnw1w='
+EMAIL_HOST_PASSWORD='pbkdf2_sha256$180000$omDPKR6ZUGny$Uvzxw1bKLJjr3Bt0NxXhe1GEUeZs7DmYJss/FC6XBLw='
+DEFAULT_FROM_EMAIL='eikaricatmn@gmail.com'
 # Application definition
 
 INSTALLED_APPS = [

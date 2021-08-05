@@ -9,8 +9,9 @@ from .models import Vendor,Customer
 from apps.product.models import Product, ProductImage,Category
 from django.contrib.auth.models import User
 from django.contrib import messages
-
+from django.core.mail import EmailMessage
 from .forms import ProductForm, ProductImageForm
+from django.views.generic import View
 # from apps.product.models import Product
 
 # def frontpage(request):
@@ -103,7 +104,29 @@ def become_vendor(request):
                     #     messages.error(request, "This username is already taken")
                     #     return HttpResponse("Invalid signup details supplied.")
                     vendor.save()
+                    email_subject='Signed up successfully'
+                    email_body= "Hii " + name + "Your email is verified"
+            
+                    # email=EmailMessage (
+                    #    email_subject,
+                    #    email_body,
+                    #    'eikaricatmn@gmail.com',
+                    #    [email],
+
+                    # )
+
+                    # email.send(fail_silently=False)
                     login(request, user)
+                    
+                    email=EmailMessage (
+                       email_subject,
+                       email_body,
+                       'eikaricatmn@gmail.com',
+                       [email],
+
+                    )
+
+                    email.send(fail_silently=False)
                     # if(vendor.verified==True):
                     #     return redirect('add_product')
                     return redirect('vendor_kyc')
@@ -118,6 +141,12 @@ def become_vendor(request):
 
 def coming_soon(request):
     return render(request, 'vendor/coming_soon.html',{})
+
+
+class VerificationView(View):
+    def get(self,request,uidb64,token):
+        return redirect('login')
+
 
 @login_required
 def vendor_kyc(request):

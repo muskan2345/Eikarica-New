@@ -3,7 +3,7 @@ from django.urls import path,include
 from apps.core.views import frontpage
 from . import views
 from django.views.generic import TemplateView
-
+from .views import VerificationView
 urlpatterns = [
     path('become-vendor/', views.become_vendor, name='become_vendor'),
     path('vendor-admin/', views.vendor_admin, name='vendor_admin'),
@@ -22,6 +22,7 @@ urlpatterns = [
     path('vendor-kyc/', views.vendor_kyc, name='vendor_kyc'),
     path('coming-soon/', views.coming_soon, name='coming_soon'),
     #path('',views.confirm,name='confirm'),
+    path('activate/<uidb64>/<token>',VerificationView.as_view(),name='activate'),
 
 
 
