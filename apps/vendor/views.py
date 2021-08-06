@@ -12,6 +12,12 @@ from django.contrib import messages
 from django.core.mail import EmailMessage
 from .forms import ProductForm, ProductImageForm
 from django.views.generic import View
+from django.urls import reverse
+from .utils import token_generator
+from django.utils.encoding import force_bytes,force_text,DjangoUnicodeDecodeError
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.contrib.sites.shortcuts import get_current_site
+
 # from apps.product.models import Product
 
 # def frontpage(request):
@@ -104,9 +110,15 @@ def become_vendor(request):
                     #     messages.error(request, "This username is already taken")
                     #     return HttpResponse("Invalid signup details supplied.")
                     vendor.save()
+
+                    # uidb64=force_bytes(urlsafe_based64_encode(user.pk))
+                    uidb64=urlsafe_base64_encode(force_bytes(user.pk))
+                    domain=get_current_site(request).domain
+                    link=reverse('activate',kwargs={'uidb64':uidb64,'token': token_generator.make_token(user)})
                     email_subject='Signed up successfully'
-                    email_body= "Hii " + name + "Your email is verified"
-            
+                    activate_url='http://'+ domain+ link
+                    email_body= "Hii " + name + "Please use this link to verify your account\n" + activate_url
+                    # activate_url='http://'+domain+link
                     # email=EmailMessage (
                     #    email_subject,
                     #    email_body,
