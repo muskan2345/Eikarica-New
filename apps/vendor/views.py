@@ -1,4 +1,4 @@
-from django.contrib.auth import login, update_session_auth_hash
+from django.contrib.auth import get_user_model, login, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
 from django.utils.text import slugify
@@ -17,6 +17,7 @@ from .utils import token_generator
 from django.utils.encoding import force_bytes,force_text,DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
 
 # from apps.product.models import Product
 
@@ -38,15 +39,28 @@ def user_login(request,*args,**kwargs):
         password = request.POST.get('password')
         loginid = request.POST.get('loginid')
 
+        User = get_user_model()
+        print(User)
+        try:
+            user = User.objects.get(username=username)
+            print(user)
+        except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+            messages.error(request,'username or password not correct')
+            return redirect('user_login')
+        if user is not None:
+            if(user.is_active==False):
+                messages.error(request,'Your account is not active, verify your email!')
+                return redirect('user_login')
+
         # Django's built-in authentication function:
         user = authenticate(username=username, password=password)
-
+        print(request.user)
         # If we have a user
         if loginid == "vendor":
-            if user:
-                #Check it the account is active
-                if user.is_active:
-                    # Log the user in.
+            # if user:
+            #     #Check it the account is active
+            #     if request.user.is_active:
+            #         # Log the user in.
 
                     login(request,user)
                     # if(vendor.verified==True):
@@ -55,29 +69,29 @@ def user_login(request,*args,**kwargs):
                     # Send the user back to some page.
                     # In this case their homepage.
                     #return HttpResponseRedirect(reverse('core/frontpage.html'))
-                else:
+                # else:
                     # If account is not active:
-                    return HttpResponse("Your account is not active.")
-            else:
-                messages.error(request,'username or password not correct')
-                return redirect('user_login')
+                    # return HttpResponse("Your account is not active.")
+            # else:
+            #     messages.error(request,'username or password not correct')
+            #     return redirect('user_login')
         else:
             #return redirect('coming_soon')
-            if user:
-                #Check it the account is active
-                if user.is_active:
+            # if user:
+            #     #Check it the account is active
+            #     if user.is_active:
                     # Log the user in.
                     login(request,user)
                     # Send the user back to some page.
                     # In this case their homepage.
                     return redirect('frontpage')
                     #return HttpResponseRedirect(reverse('core/frontpage.html'))
-                else:
-                    # If account is not active:
-                    return HttpResponse("Your account is not active.")
-            else:
-                messages.error(request,'username or password not correct')
-                return redirect('user_login')
+                # else:
+                #     # If account is not active:
+                #     return HttpResponse("Your account is not active.")
+            # else:
+            #     messages.error(request,'username or password not correct')
+            #     return redirect('user_login')
 
 
     else:
@@ -105,6 +119,24 @@ def become_vendor(request):
                 if loginid == "vendor":
                     # raw_password = password1
                     user = User.objects.create_user(name, email, password)
+                    uidb64=urlsafe_base64_encode(force_bytes(user.pk))
+                    # domain=get_current_site(request).domain
+                    domain='localhost:8000'
+                    link=reverse('activate',kwargs={'uidb64':uidb64,'token': token_generator.make_token(user)})
+                    email_subject='Signed up successfully'
+                    activate_url='http://'+ domain+ link
+                    email_body= "Hii " + name + "\nPlease use this link to verify your account\n" + activate_url
+                    user.is_active = False
+                    user.save()
+                    # current_site = get_current_site(request)
+                    # email_body = render_to_string('vendor/email_template.html')
+                    email=EmailMessage (
+                       email_subject,
+                       email_body,
+                       'eikaricatmn@gmail.com',
+                       [email],
+                    )
+                    email.send(fail_silently=False)
                     vendor = Vendor(name=name, email=email, password=password, created_by=user)
                     # if User.objects.filter(name = name).first():
                     #     messages.error(request, "This username is already taken")
@@ -112,12 +144,6 @@ def become_vendor(request):
                     vendor.save()
 
                     # uidb64=force_bytes(urlsafe_based64_encode(user.pk))
-                    uidb64=urlsafe_base64_encode(force_bytes(user.pk))
-                    domain=get_current_site(request).domain
-                    link=reverse('activate',kwargs={'uidb64':uidb64,'token': token_generator.make_token(user)})
-                    email_subject='Signed up successfully'
-                    activate_url='http://'+ domain+ link
-                    email_body= "Hii " + name + "Please use this link to verify your account\n" + activate_url
                     # activate_url='http://'+domain+link
                     # email=EmailMessage (
                     #    email_subject,
@@ -128,20 +154,10 @@ def become_vendor(request):
                     # )
 
                     # email.send(fail_silently=False)
-                    login(request, user)
                     
-                    email=EmailMessage (
-                       email_subject,
-                       email_body,
-                       'eikaricatmn@gmail.com',
-                       [email],
-
-                    )
-
-                    email.send(fail_silently=False)
                     # if(vendor.verified==True):
                     #     return redirect('add_product')
-                    return redirect('vendor_kyc')
+                    return HttpResponse("Sign-up successful, check your email for further instructions!")
                 else:
                     cus= User.objects.create_user(name, email, password)
                     customer = Customer(name=name, email=email, password=password, created_by=cus)
@@ -157,7 +173,19 @@ def coming_soon(request):
 
 class VerificationView(View):
     def get(self,request,uidb64,token):
-        return redirect('login')
+        User = get_user_model()
+        try:
+            uid = force_text(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=uid)
+            print(user)
+        except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = None
+        if user is not None:
+            user.is_active = True
+            user.save()
+            return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        else:
+            return HttpResponse('Activation link is invalid!')
 
 
 @login_required
