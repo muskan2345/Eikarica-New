@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'tuxik&w(xnck86#t!asbp67u$##glq!#08y35%2kxrt!-3i%0n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['eikarica-env.eba-tjyk228i.ap-south-1.elasticbeanstalk.com', 'localhost']
 
@@ -170,12 +170,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
-]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# STATIC_URL = '/static/'
+# STATIC_ROOT = '/static/'
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'static'
+# ]
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR / 'media/'
 
 SITE_ID = 1
 
