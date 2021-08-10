@@ -24,20 +24,23 @@ def product(request, category_slug, product_slug):
 
     for image in product.images.all():
         imagesstring += ('{"thumbnail": "%s", "image": "%s", "id": "%s"},' % (image.get_thumbnail(), image.image.url, image.id))
-    
-    print(imagesstring)
 
     if request.method == 'POST':
         form = AddToCartForm(request.POST)
 
         if form.is_valid():
             quantity = form.cleaned_data['quantity']
+            if(quantity>product.quantity):
+                messages.error(request, 'Out of stock!')
+                return redirect('product', category_slug=category_slug, product_slug=product_slug)
+            else:
+                print(quantity)
+                cart.add(product_id=product.id, quantity=quantity, update_quantity=True)
+                product.quantity = product.quantity-quantity
+                product.save()
+                messages.success(request, 'The product was added to the cart')
 
-            cart.add(product_id=product.id, quantity=quantity, update_quantity=False)
-
-            messages.success(request, 'The product was added to the cart')
-
-            return redirect('product', category_slug=category_slug, product_slug=product_slug)
+                return redirect('product', category_slug=category_slug, product_slug=product_slug)
     else:
         form = AddToCartForm()
 

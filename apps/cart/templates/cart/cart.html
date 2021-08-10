@@ -30,9 +30,6 @@
                                 </td>
                                 <td>
                                     {{ item.quantity }}
-
-                                    <a href="?change_quantity={{ item.id }}&quantity=-1">-</a>
-                                    <a href="?change_quantity={{ item.id }}&quantity=1">+</a>
                                 </td>
                                 <td> ₹ {{ item.total_price }}</td>
                                 <td><a href="?remove_from_cart={{ item.id }}" class="delete">Remove</a></td>
@@ -54,7 +51,7 @@
 
         <h2 class="subtitle">Contact information</h2>
 
-        <form method="post" action="." id="payment-form">
+        <form method="post" action="{% url 'success' %}" id="payment-form">
             {% csrf_token %}    
 
             {% if form.non_field_errors %}
@@ -158,41 +155,4 @@
     {% else %}
         <p>You don't have any products in your cart!</p>
     {% endif %}
-{% endblock %}
-
-{% block scripts %}
-    <script src="https://js.stripe.com/v3/"></script>
-    <script>
-        var stripe = Stripe('{{ stripe_pub_key }}');
-        var elements = stripe.elements();
-
-        var card = elements.create('card');
-
-        card.mount('#card-element');
-
-        var form = document.getElementById('payment-form');
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            stripe.createToken(card).then(function(result) {
-                if (result.error) {
-                    var errorElement = document.getElementById('card-errors');
-                    errorElement.textContent = result.error.message;
-                } else {
-                    stripeTokenHandler(result.token);
-                }
-            });
-        });
-
-        function stripeTokenHandler(token) {
-            var form = document.getElementById('payment-form');
-            var hiddenInput = document.createElement('input');
-            hiddenInput.setAttribute('type', 'hidden');
-            hiddenInput.setAttribute('name', 'stripe_token');
-            hiddenInput.setAttribute('value', token.id);
-            form.appendChild(hiddenInput);
-
-            form.submit();
-        }
-    </script>
 {% endblock %}
