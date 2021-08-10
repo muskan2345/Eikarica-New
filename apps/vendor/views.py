@@ -157,7 +157,8 @@ def become_vendor(request):
                     
                     # if(vendor.verified==True):
                     #     return redirect('add_product')
-                    return HttpResponse("Sign-up successful, check your email for further instructions!")
+                    messages.error(request,'Sign-up successful, check your email for further instructions!')
+                    return redirect('user_login')
                 else:
                     cus= User.objects.create_user(name, email, password)
                     customer = Customer(name=name, email=email, password=password, created_by=cus)
@@ -183,7 +184,8 @@ class VerificationView(View):
         if user is not None:
             user.is_active = True
             user.save()
-            return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+            messages.error(request,'Thank you for your email confirmation. Now you can login your account.')
+            return redirect('user_login')
         else:
             return HttpResponse('Activation link is invalid!')
 
