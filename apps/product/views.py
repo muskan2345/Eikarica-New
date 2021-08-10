@@ -46,14 +46,14 @@ def product(request, category_slug, product_slug):
     if len(similar_products) >= 4:
         similar_products = random.sample(similar_products, 4)
 
-    context = {
-        'form': form,
-        'product': product,
-        'similar_products': similar_products,
-        'imagesstring': "[" + imagesstring.rstrip(',') + "]"
-    }
+    # context = {
+    #     'form': form,
+    #     'product': product,
+    #     'similar_products': similar_products,
+    #     'imagesstring': "[" + imagesstring.rstrip(',') + "]"
+    # }
 
-    return render(request, 'product/product.html', context)
+    return render(request, 'product/product.html', {'product':product, 'similar_products':similar_products,'form':form})
 
 def category(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)

@@ -3,14 +3,17 @@
 {% block title %}{{ product.title }} | {% endblock %}
 
 {% block content %}
+
+
 <div id="productapp">
     {% if product.image %}
         <figure class="image is-4by3 mb-6">
-            <img :src="mainImage.image">
+            <!-- <img :src="mainImage.image"> -->
+            <img src="{{product.image.url}}" alt="">
         </figure>
     {% endif %}
 
-    {% if product.images.all %}    
+    <!-- {% if product.images.all %}    
         <hr>
 
         <div class="columns">
@@ -18,7 +21,7 @@
                 <img :src="image.thumbnail" @click="changeMainImage(image)">
             </div>
         </div>
-    {% endif %}
+    {% endif %} -->
 
     <h1 class="title">{{ product.title }}, ₹ {{ product.price }}</h1>
 
@@ -34,7 +37,7 @@
         {% endfor %}
     {% endif %}
 
-    <form method="post" action=".">
+    <form method="post" action="{% url 'product' product.category.slug product.slug %}">
         {% csrf_token %}
 
         <div class="field has-addons">
@@ -64,28 +67,3 @@
 </div>
 {% endblock %}
 
-{% block scripts %}
-{{ imagesstring|json_script:"json-imagesstring" }}
-<script src="https://unpkg.com/vue@next"></script>
-<script>
-    const ProductApp = {
-        data() {
-            return {
-                mainImage: '',
-                images: []
-            }
-        },
-        mounted() {
-            this.images = JSON.parse(JSON.parse(document.getElementById("json-imagesstring").textContent))
-            this.mainImage = this.images[0]
-        },
-        methods: {
-            changeMainImage(image) {
-                this.mainImage = image
-            }
-        }
-    }
-
-    Vue.createApp(ProductApp).mount('#productapp')
-</script>
-{% endblock %}
