@@ -5,9 +5,143 @@
 {% block title %}Welcome | {% endblock %}
 
 {% block content %}
+
+	<div class="column is-12 has-text-centered mt-6 mb-6">
+		<h2 class="is-size-3" style="font-family: 'Otomanopee One', sans-serif;"><B>Welcome to EIKARICA !</B></h2>
+	</div>
+
+	<aside id="fh5co-hero" class="js-fullheight">
+		<div class="flexslider js-fullheight">
+			<ul class="slides">
+
+			<li style="background-image: url(/static/images/product-2.jpg);">
+				<div class="container">
+					<div class="col-md-6 col-md-offset-3 col-md-pull-3 js-fullheight slider-text">
+						<div class="slider-text-inner">
+							<div class="desc">
+								
+								<h2>Stationary</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+
+			<li style="background-image: url(/static/images/product-3.jpg);">
+				<div class="container">
+					<div class="col-md-6 col-md-offset-3 col-md-pull-3 js-fullheight slider-text">
+						<div class="slider-text-inner">
+							<div class="desc">
+								<h2>Electronics</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+
+			<li style="background-image: url(/static/images/product-4.jpg);">
+				<div class="container">
+					<div class="col-md-6 col-md-offset-3 col-md-pull-3 js-fullheight slider-text">
+						<div class="slider-text-inner">
+							<div class="desc">
+								<h2>Groceries</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+
+			<li style="background-image: url(/static/images/product-5.jpg);">
+				<div class="container">
+					<div class="col-md-6 col-md-offset-3 col-md-pull-3 js-fullheight slider-text">
+						<div class="slider-text-inner">
+							<div class="desc">
+								<h2>Travel Accessories</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+
+			<li style="background-image: url(/static/images/product-6.jpg);">
+				<div class="container">
+					<div class="col-md-6 col-md-offset-3 col-md-pull-3 js-fullheight slider-text">
+						<div class="slider-text-inner">
+							<div class="desc">
+								<h2>Home Decor</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+
+
+			<li style="background-image: url(/static/images/product-7.jpg) ;">
+				<div class="overlay-gradient"></div>
+				<div class="container">
+					<div class="col-md-6 col-md-offset-3 col-md-pull-3 js-fullheight slider-text">
+						<div class="slider-text-inner">
+							<div class="desc">
+								<h2>Men's Wear</h2>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+			<li style="background-image: url(/static/images/product-8.jpg);">
+				<div class="container">
+					<div class="col-md-6 col-md-offset-3 col-md-pull-3 js-fullheight slider-text">
+						<div class="slider-text-inner">
+							<div class="desc">
+								<h2>Women's Wear</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+			<li style="background-image: url(/static/images/product-9.jpg);">
+				<div class="container">
+					<div class="col-md-6 col-md-offset-3 col-md-pull-3 js-fullheight slider-text">
+						<div class="slider-text-inner">
+							<div class="desc">
+								<h2>Kids' Toys and Accessories</h2>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+			<li style="background-image: url(/static/images/product-10.jpg);">
+				<div class="container">
+					<div class="col-md-6 col-md-offset-3 col-md-pull-3 js-fullheight slider-text">
+						<div class="slider-text-inner">
+							<div class="desc">
+								<h2>Cosmetics</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+
+			<li style="background-image: url(/static/images/product-11.jpg);">
+				<div class="container">
+					<div class="col-md-6 col-md-offset-3 col-md-pull-3 js-fullheight slider-text">
+						<div class="slider-text-inner">
+							<div class="desc">
+								<h2>Kitchenware</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+			</ul>
+		</div>
+	</aside>
+	
     <div class="columns is-multiline mb-6">
         <div class="column is-12 has-text-centered mt-6 mb-6">
-            <h2 class="is-size-3">Newest products</h2>
+            <h2 class="is-size-3" style="font-family: 'Otomanopee One', sans-serif;">Newest products</h2>
         </div>
 
         {% for product in newest_products %}
@@ -15,7 +149,9 @@
         {% endfor %}
     </div>
 
-    <div id="fh5co-services" class="fh5co-bg-section">
+	
+
+    <!-- <div id="fh5co-services" class="fh5co-bg-section">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-4 col-sm-4 text-center">
@@ -44,7 +180,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
     <div id="fh5co-testimonial" class="fh5co-bg-section">
 		<div class="container">
@@ -170,7 +306,7 @@
 		</div>
 	</div>
 
-	<footer id="fh5co-footer" role="contentinfo">
+	<!-- <footer id="fh5co-footer" role="contentinfo">
 		<div class="container">
 			<div class="row row-pb-md">
 				<div class="col-md-4 fh5co-widget">
@@ -223,7 +359,7 @@
 				</div>
 			</div>
 		</div>
-	</footer>
+	</footer> -->
 	</div>
 
 	<div class="gototop js-top">
