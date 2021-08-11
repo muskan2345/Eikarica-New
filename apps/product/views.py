@@ -25,29 +25,32 @@ def product(request, category_slug, product_slug):
     for image in product.images.all():
         imagesstring += ('{"thumbnail": "%s", "image": "%s", "id": "%s"},' % (image.get_thumbnail(), image.image.url, image.id))
 
+    print("function entered")
     if request.method == 'POST':
-        form = AddToCartForm(request.POST)
+        # form = AddToCartForm(request.POST)
+        print("block reached")
 
-        if form.is_valid():
-            quantity = form.cleaned_data['quantity']
-            if(quantity>product.quantity):
-                messages.error(request, 'Out of stock!')
-                return redirect('product', category_slug=category_slug, product_slug=product_slug)
-            else:
-                print(quantity)
-                cart.add(product_id=product.id, quantity=quantity, update_quantity=True)
-                product.quantity = product.quantity-quantity
-                product.save()
-                messages.success(request, 'The product was added to the cart')
+        # if form.is_valid():
+        quantity = request.POST.get('quantity')
+        quantity = int(quantity)
+        if(quantity>product.quantity):
+            messages.error(request, 'Out of stock!')
+            return redirect('product', category_slug=category_slug, product_slug=product_slug)
+        else:
+            print(quantity)
+            cart.add(product_id=product.id, quantity=quantity, update_quantity=True)
+            product.quantity = product.quantity-quantity
+            product.save()
+            messages.success(request, 'The product was added to the cart!')
 
-                return redirect('product', category_slug=category_slug, product_slug=product_slug)
+            return redirect('product', category_slug=category_slug, product_slug=product_slug)
     else:
-        form = AddToCartForm()
+        # form = AddToCartForm()
 
-    similar_products = list(product.category.products.exclude(id=product.id))
+        similar_products = list(product.category.products.exclude(id=product.id))
 
-    if len(similar_products) >= 4:
-        similar_products = random.sample(similar_products, 4)
+        if len(similar_products) >= 4:
+            similar_products = random.sample(similar_products, 4)
 
     # context = {
     #     'form': form,
@@ -56,7 +59,7 @@ def product(request, category_slug, product_slug):
     #     'imagesstring': "[" + imagesstring.rstrip(',') + "]"
     # }
 
-    return render(request, 'product/product.html', {'product':product, 'similar_products':similar_products,'form':form})
+        return render(request, 'product/product.html', {'product':product, 'similar_products':similar_products})
 
 def category(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)

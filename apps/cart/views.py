@@ -11,7 +11,9 @@ from apps.order.utilities import checkout, notify_customer, notify_vendor
 from apps.vendor.models import Vendor, Customer
 
 def cart_detail(request):
-    if request.user.customer:
+    if request.user.customer.cart:
+        cart = request.user.customer.cart
+    else:
         cart = Cart(request)
     
     if request.method == 'POST':

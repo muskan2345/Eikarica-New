@@ -150,8 +150,9 @@
 } */
 .purchase-info .btns{
     cursor: pointer;
-    color: #fff;
+    color: ;
 }
+
 .purchase-info .btns:first-of-type{
     background: #20dbc2;
 }
@@ -162,7 +163,7 @@
      background-color: green;
 }
 .purchase-info .btns:hover{
-    background-color: blue;
+    background-color: #20dbc2;
 }
 
 

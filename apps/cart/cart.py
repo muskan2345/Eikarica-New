@@ -26,7 +26,6 @@ class Cart(object):
     
     def add(self, product_id, quantity=0, update_quantity=False):
         product_id = str(product_id)
-        
         if product_id not in self.cart:
             self.cart[product_id] = {'quantity': 0, 'id': product_id}
         
@@ -40,6 +39,9 @@ class Cart(object):
     
     def remove(self, product_id):
         if product_id in self.cart:
+            product = Product.objects.get(pk=product_id)
+            product.quantity = product.quantity + self.cart[product_id]['quantity']
+            product.save()
             del self.cart[product_id]
             self.save()
 
