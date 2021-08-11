@@ -1,29 +1,128 @@
 {% extends 'core/base-new.html' %}
-
-{% block title %}{{ product.title }} | {% endblock %}
+{% load static %}
 
 {% block content %}
 
+<!-- <div class = "card-wrapper"> -->
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <title>{% block title %}{{ product.title }} | EIKARICA{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'styles/product.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+        <script src="{% static 'scripts/product.js' %}"></script>
+    
+    </head>
+    <body>    
+    <div class = "card">
+        <!-- card left -->
+        {% if product.image %}
+        <div class = "product-imgs">
+            <div class = "img-display">
+                <div class = "img-showcase">
+                    <img class = 'imgclass' src = "{{product.image.url}}" alt = "{{ product.title }}">                    
+                </div>
+            </div>
+        </div>
+        {% endif %}
 
-<div id="productapp">
+        <!-- card right -->
+        <div class = "product-content">
+            <h2 class = "product-title">{{ product.title }}</h2>
+            <a href = "{% url 'frontpage' %}" class = "product-link">Vist Store</a>
+            <!-- <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half-o"></i>
+                <i class="fa fa-star-o"></i>
+            </div> -->
+
+            <div class = "product-price">
+                <p class = "new-price">Price: <span>₹ {{ product.price }}</span>
+                <br>
+                Available Quantity: {{ product.quantity }}
+                <br>
+                Sold by: {{ product.vendor.name }}
+                </p>
+            </div>
+
+            <div class = "product-detail">
+                <h2>about this item: </h2>
+                <p>{{ product.description }}</p>
+                <ul>
+                    <!-- <li>Color: <span>Black</span></li>
+                    <li>Available: <span>in stock</span></li> -->
+                    <li>Category: <span>{{ category.title }}</span></li>
+                    <li>Shipping Area: <span>All over the world</span></li>
+                    <li>Shipping Fee: <span>Free</span></li>
+                </ul>
+            </div>
+
+            
+
+            <div class = "purchase-info">
+                <form method="post" action="{% url 'product' product.category.slug product.slug %}">
+                    {% csrf_token %}
+                    <input type = "number" name = 'quantity' min = "0" value = "1">
+                    <div class="control"></div>
+                    <button type = "button" class = "btns">
+                    Add to Cart <i class = "fas fa-shopping-cart"></i>
+                    </button>
+                    </div>
+                </form>
+            </div>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="notification is-success is-toast">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+        </div>
+    </div>
+
+    {% if similar_products %}
+    <hr>
+    <div class="related">
+        <h2>Related Items</h2>
+        <div class="row">
+            {% for product in similar_products %}
+                {% include 'product/parts/list_item.html' %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+<!-- </div> -->
+</body>
+</html>
+{% endblock %}
+
+
+<!-- <div id="productapp">
     {% if product.image %}
         <figure class="image is-4by3 mb-6">
-            <!-- <img :src="mainImage.image"> -->
             <img src="{{product.image.url}}" alt="">
         </figure>
-    {% endif %}
+    {% endif %} -->
+
 
     <!-- {% if product.images.all %}    
         <hr>
 
         <div class="columns">
             <div class="column is-2" v-for="image in images" v-bind:key="image.id">
-                <img :src="image.thumbnail" @click="changeMainImage(image)">
-            </div>
+                <!-- <img :src="image.thumbnail" @click="changeMainImage(image)"> -->
+            <!-- </div>
         </div>
     {% endif %} -->
 
-    <h1 class="title">{{ product.title }}</h1>
+    <!-- <h1 class="title">{{ product.title }}</h1>
     <p>Price: ₹ {{ product.price }}<br>Available Quantity: {{ product.quantity }}</p>
     <br>
     <p class="mb-6"><span class="tag is-dark">Sold by: {{ product.vendor.name }}</span></p>
@@ -65,6 +164,4 @@
             {% endfor %}
         </div>
     {% endif %}
-</div>
-{% endblock %}
-
+</div> -->
