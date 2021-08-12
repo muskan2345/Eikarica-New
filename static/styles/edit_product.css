@@ -224,12 +224,20 @@ body{
         grid-template-columns: repeat(2, 1fr);
         align-items: center;
     }
+    
 }
 
 @media screen and (min-width: 1200px){
     .contact-info{
         grid-template-columns: repeat(4, 1fr);
     }
+}
+
+@media screen and (max-width: 768px) {
+    .send-btn{
+        margin-bottom: 15px;
+    }
+    
 }
 
 .heading {

@@ -2,7 +2,7 @@
     <div class="box">
         <figure class="image is-4by3 mb-4">
             <!-- <img src="{{ image }}">       -->
-            <img src="/media/uploads/{{ product.image }}">
+            <img src="{{product.image.url}}">
           
         </figure>
 
@@ -12,6 +12,6 @@
 
         <hr>
 
-        <a href="{% url 'product' product.category.slug product.slug %}" class="button is-dark is-uppercase">View</a>
+        <a href="{% url 'product' product.category.slug product.slug %}" class="button is-dark is-uppercase" style="background-color: #20dbc2;">View Product</a>
     </div>
 </div>

@@ -128,6 +128,7 @@ def become_vendor(request):
                     email_body= "Hii " + name + "\nPlease use this link to verify your account\n" + activate_url
                     user.is_active = False
                     user.save()
+                    
                     # current_site = get_current_site(request)
                     # email_body = render_to_string('vendor/email_template.html')
                     email=EmailMessage (
@@ -137,7 +138,6 @@ def become_vendor(request):
                        [email],
                     )
                     email.send(fail_silently=False)
-                    vendor = Vendor(name=name, email=email, password=password, created_by=user)
                     # if User.objects.filter(name = name).first():
                     #     messages.error(request, "This username is already taken")
                     #     return HttpResponse("Invalid signup details supplied.")
@@ -221,7 +221,11 @@ def user_logout(request):
 
 @login_required
 def vendor_admin(request):
-    vendor = request.user.vendor
+    try:
+        vendor = request.user.vendor
+    except:
+        messages.error(request,'You are not a valid vendor!')
+        return redirect('user_login')
     products = vendor.products.all()
     orders = vendor.orders.all()
 
