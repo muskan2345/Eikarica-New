@@ -128,7 +128,7 @@ def become_vendor(request):
                     email_body= "Hii " + name + "\nPlease use this link to verify your account\n" + activate_url
                     user.is_active = False
                     user.save()
-                    
+                    vendor = Vendor(name=name, email=email, password=password, created_by=user)
                     # current_site = get_current_site(request)
                     # email_body = render_to_string('vendor/email_template.html')
                     email=EmailMessage (
