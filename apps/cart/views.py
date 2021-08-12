@@ -11,10 +11,12 @@ from apps.order.utilities import checkout, notify_customer, notify_vendor
 from apps.vendor.models import Vendor, Customer
 
 def cart_detail(request):
-    if request.user.customer.cart:
-        cart = request.user.customer.cart
-    else:
-        cart = Cart(request)
+    try:
+        if request.user.customer:
+            cart = Cart(request)
+    except:
+        if request.user.vendor:
+            cart = Cart(request)
     
     if request.method == 'POST':
         form = CheckoutForm(request.POST)

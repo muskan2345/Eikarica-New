@@ -75,7 +75,7 @@
             <div class = "purchase-info">
                 <form method="post" action="{% url 'product' product.category.slug product.slug %}">
                     {% csrf_token %}
-                    <input type = "number" name = "quantity" min = "0" value = "1">
+                    <p>Quantity: <input type = "number" name = "quantity" min = "0" value = "1"></p>
                     <div class="control"></div>
                     <input type = "submit" class = "btns" style="width:fit-content; color:black; font-weight: bold;" value="Add to Cart">
                     <i class = "fas fa-shopping-cart"></i>

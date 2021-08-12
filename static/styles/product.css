@@ -166,7 +166,6 @@
     background-color: #20dbc2;
 }
 
-
 @media screen and (min-width: 992px){
     .card{
         display: grid;
@@ -187,82 +186,4 @@
     .product-content{
         padding-top: 0;
     }
-    .contact-footer{
-        padding: 2rem 0;
-        background: #20dbc2;
-    }
-    .contact-footer h3{
-        font-size: 1.3rem;
-        color: #fff;
-        margin-bottom: 1rem;
-        text-align: center;
-    }
-    .social-links{
-        display: flex;
-        justify-content: center;
-    }
-    .social-links a{
-        text-decoration: none;
-        width: 40px;
-        height: 40px;
-        color: #fff;
-        border: 2px solid #fff;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0.4rem;
-        transition: all 0.4s ease;
-    }
-    .social-links a:hover{
-        color: #F9A826;
-        border-color: #F9A826;
-    }
-    .row{
-        width: 90%;
-        height: 100vh;
-        margin: auto;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-    .rating{
-        display: flex;
-        height: 15px;
-    }
-    .rating .fa{
-        color: orange;
-    }
-
-    .related{
-        width: 90%;
-        margin: 0 auto 40px;
-        margin-top: 5rem;
-    }
-    .related .row{
-        width: 100%;
-        height: auto;
-    }
-    .columns{
-        flex-basis: 22%;
-        height: 100%;
-    }
-    .items img{
-        width: 100%;
-    }
-    .pointer {
-        cursor: pointer;
-      
-    }
-    .details{
-        margin-top: 20px;
-    }
-    .details p{
-        font-size: 14px;
-        margin-bottom: 10px;
-    }
-    .details .rating{
-        margin: 10px 0;
-    }
 }
-    
