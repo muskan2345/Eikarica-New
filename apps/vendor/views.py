@@ -121,10 +121,10 @@ def become_vendor(request):
                     user = User.objects.create_user(name, email, password)
                     uidb64=urlsafe_base64_encode(force_bytes(user.pk))
                     # domain=get_current_site(request).domain
-                    domain='localhost:8000'
+                    domain='www.eikarica.techmihirnaik.in'
                     link=reverse('activate',kwargs={'uidb64':uidb64,'token': token_generator.make_token(user)})
                     email_subject='Signed up successfully'
-                    activate_url='http://'+ domain+ link
+                    activate_url='https://'+ domain+ link
                     email_body= "Hii " + name + "\nPlease use this link to verify your account\n" + activate_url
                     user.is_active = False
                     user.save()
