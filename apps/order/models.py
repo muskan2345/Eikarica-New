@@ -12,9 +12,9 @@ class Order(models.Model):
     place = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
-    paid_amount = models.DecimalField(max_digits=8, decimal_places=2)
+    amount = models.DecimalField(max_digits=8, decimal_places=2)
     vendors = models.ManyToManyField(Vendor, related_name='orders')
-
+    
     class Meta:
         ordering = ['-created_at']
     

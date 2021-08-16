@@ -22,7 +22,7 @@
                             <tr>
                                 <td>
                                     <figure class="image is-64x64">
-                                        <img src="{{ item.product.get_thumbnail }}">
+                                        <img src="{{item.product.image.url}}">
                                     </figure>
                                 </td>
                                 <td>
@@ -51,7 +51,7 @@
 
         <h2 class="subtitle">Contact information</h2>
 
-        <form method="post" action="{% url 'success' %}" id="payment-form">
+        <form method="post" action="{% url 'payment' %}" id="payment-form">
             {% csrf_token %}    
 
             {% if form.non_field_errors %}
@@ -78,7 +78,7 @@
                         <label>First name</label>
 
                         <div class="control">
-                            <input class="input" type="text" name="first_name">
+                            <input class="input" type="text" name="first_name" required>
                         </div>
                     </div>
 
@@ -94,7 +94,7 @@
                         <label>E-mail</label>
 
                         <div class="control">
-                            <input class="input" type="email" name="email">
+                            <input class="input" type="email" name="email" required>
                         </div>
                     </div>
 
@@ -102,7 +102,7 @@
                         <label>Phone</label>
 
                         <div class="control">
-                            <input class="input" type="text" name="phone">
+                            <input class="input" type="number" name="phone" required>
                         </div>
                     </div>
                 </div>
@@ -112,7 +112,7 @@
                         <label>Address</label>
 
                         <div class="control">
-                            <input class="input" type="text" name="address">
+                            <input class="input" type="text" name="address" required>
                         </div>
                     </div>
 
@@ -120,7 +120,7 @@
                         <label>Zip code</label>
 
                         <div class="control">
-                            <input class="input" type="text" name="zipcode">
+                            <input class="input" type="number" name="zipcode" required>
                         </div>
                     </div>
 
@@ -128,16 +128,10 @@
                         <label>Place</label>
 
                         <div class="control">
-                            <input class="input" type="text" name="place">
+                            <input class="input" type="text" name="place" required>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <h2 class="subtitle">Payment information</h2>
-
-            <div id="card-element">
-                <!-- A Stripe Element will be inserted here -->
             </div>
 
             {% if messages %}
@@ -148,10 +142,10 @@
             
             <div class="field">
                 <div class="control">
-                    <button class="button is-dark mt-4 is-uppercase">Checkout</button>
+                    <input type="submit" class="button is-dark mt-4 is-uppercase" value="Checkout">
                 </div>
             </div>
-        </div>
+        </form>
     {% else %}
         <p>You don't have any products in your cart!</p>
     {% endif %}

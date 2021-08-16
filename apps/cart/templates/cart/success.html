@@ -3,5 +3,17 @@
 {% block title %}Success | {% endblock %}
 
 {% block content %}
-    <h1 class="title">Thanks for the order</h1>
+    {% if status %}
+        <div style="text-align: center;">
+        <h1 class="title"><i class="fas fa-check-circle">Payment Successful!</i></h1>
+        <br><br>
+        <h2 style="font-size:x-large; font-weight: bold;">Thanks for the order!</h2>
+        </div>
+    {% else %}
+    <div style="text-align: center;">
+        <h1 class="title"><i class="fas fa-cross">Payment Unsuccessful!</i></h1>
+        <br><br>
+        <h2 style="font-size:x-large; font-weight: bold;">Order cannot be processed!</h2>
+        </div>
+    {% endif %}
 {% endblock %}

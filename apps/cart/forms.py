@@ -8,4 +8,4 @@ class CheckoutForm(forms.Form):
     address = forms.CharField(max_length=255)
     zipcode = forms.CharField(max_length=255)
     place = forms.CharField(max_length=255)
-    stripe_token = forms.CharField(max_length=255)
+    # stripe_token = forms.CharField(max_length=255)

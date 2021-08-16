@@ -57,12 +57,17 @@ def user_login(request,*args,**kwargs):
         print(request.user)
         # If we have a user
         if loginid == "vendor":
-            # if user:
+            if user:
             #     #Check it the account is active
             #     if request.user.is_active:
             #         # Log the user in.
 
                     login(request,user)
+                    try:
+                        request.user.vendor
+                    except:
+                        messages.error(request,'You are not a valid vendor!')
+                        return redirect('user_logout')
                     # if(vendor.verified==True):
                     #     return redirect('vendor_admin')
                     return redirect('vendor_admin')
@@ -72,16 +77,21 @@ def user_login(request,*args,**kwargs):
                 # else:
                     # If account is not active:
                     # return HttpResponse("Your account is not active.")
-            # else:
-            #     messages.error(request,'username or password not correct')
-            #     return redirect('user_login')
+            else:
+                messages.error(request,'username or password not correct')
+                return redirect('user_login')
         else:
             #return redirect('coming_soon')
-            # if user:
+            if user:
             #     #Check it the account is active
             #     if user.is_active:
                     # Log the user in.
                     login(request,user)
+                    try:
+                        request.user.customer
+                    except:
+                        messages.error(request,'You are not a valid customer!')
+                        return redirect('user_logout')
                     # Send the user back to some page.
                     # In this case their homepage.
                     return redirect('frontpage')
@@ -89,9 +99,9 @@ def user_login(request,*args,**kwargs):
                 # else:
                 #     # If account is not active:
                 #     return HttpResponse("Your account is not active.")
-            # else:
-            #     messages.error(request,'username or password not correct')
-            #     return redirect('user_login')
+            else:
+                messages.error(request,'username or password not correct')
+                return redirect('user_login')
 
 
     else:
@@ -161,11 +171,46 @@ def become_vendor(request):
                     return redirect('user_login')
                 else:
                     cus= User.objects.create_user(name, email, password)
+                    uidb64=urlsafe_base64_encode(force_bytes(cus.pk))
+                    # domain=get_current_site(request).domain
+                    domain='www.eikarica.techmihirnaik.in'
+                    link=reverse('activate',kwargs={'uidb64':uidb64,'token': token_generator.make_token(cus)})
+                    email_subject='Signed up successfully'
+                    activate_url='https://'+ domain+ link
+                    email_body= "Hii " + name + "\nPlease use this link to verify your account\n" + activate_url
+                    cus.is_active = False
+                    cus.save()
                     customer = Customer(name=name, email=email, password=password, created_by=cus)
-
+                    # current_site = get_current_site(request)
+                    # email_body = render_to_string('vendor/email_template.html')
+                    email=EmailMessage (
+                       email_subject,
+                       email_body,
+                       'eikaricatmn@gmail.com',
+                       [email],
+                    )
+                    email.send(fail_silently=False)
+                    # if User.objects.filter(name = name).first():
+                    #     messages.error(request, "This username is already taken")
+                    #     return HttpResponse("Invalid signup details supplied.")
                     customer.save()
-                    login(request,cus)
-                    return redirect('frontpage')
+
+                    # uidb64=force_bytes(urlsafe_based64_encode(user.pk))
+                    # activate_url='http://'+domain+link
+                    # email=EmailMessage (
+                    #    email_subject,
+                    #    email_body,
+                    #    'eikaricatmn@gmail.com',
+                    #    [email],
+
+                    # )
+
+                    # email.send(fail_silently=False)
+                    
+                    # if(vendor.verified==True):
+                    #     return redirect('add_product')
+                    messages.error(request,'Sign-up successful, check your email for further instructions!')
+                    return redirect('user_login')
     return render(request, 'vendor/login.html', {})
 
 def coming_soon(request):
@@ -221,11 +266,7 @@ def user_logout(request):
 
 @login_required
 def vendor_admin(request):
-    try:
-        vendor = request.user.vendor
-    except:
-        messages.error(request,'You are not a valid vendor!')
-        return redirect('user_login')
+    vendor=request.user.vendor
     products = vendor.products.all()
     orders = vendor.orders.all()
 
@@ -336,6 +377,15 @@ def edit_vendor(request):
         password = request.POST.get('password')
         rpassword=request.POST.get('rpassword')
         confirm_password=request.POST.get('confirm_password')
+        fullname = vendor.fullname
+        gender = vendor.gender
+        dob = vendor.dob
+        nationality = vendor.nationality
+        mobile = vendor.mobile
+        idType = vendor.idType
+        idFile = vendor.idFile
+        address = vendor.address
+        verified = vendor.verified
 
         if password == vendor.password:
             print("test1")
@@ -345,6 +395,15 @@ def edit_vendor(request):
                 vendor.created_by.delete()
                 user = User.objects.create_user(name, email, rpassword)
                 vendor = Vendor(name=name, email=email, password=rpassword, created_by=user)
+                vendor.fullname = fullname
+                vendor.gender = gender
+                vendor.dob = dob
+                vendor.nationality = nationality
+                vendor.mobile = mobile
+                vendor.idType = idType
+                vendor.idFile = idFile
+                vendor.address = address
+                vendor.verified = verified
                 vendor.save()
                 #product.vendor=vendor
                 
