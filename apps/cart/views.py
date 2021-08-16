@@ -57,7 +57,7 @@ def success(request, order):
         'razorpay_signature': response['razorpay_signature']
     }
 
-    client = razorpay.Client(auth=(('rzp_live_uA2qLPA4nKvuvr','LsG5gnaqcHXfWQmkqxwCX2l0')))
+    client = razorpay.Client(auth=(('rzp_live_HGmBto0xC8WCRv','8TBgcTbNtQGj5sKZxLlvzJ7g')))
     
     try:
         status = client.utility.verify_payment_signature(params_dict)
@@ -88,7 +88,7 @@ def payment(request):
             #     source=stripe_token
             # )
                 amount=int(cart.get_total_cost() * 100)
-                client = razorpay.Client(auth=('rzp_live_uA2qLPA4nKvuvr','LsG5gnaqcHXfWQmkqxwCX2l0'))
+                client = razorpay.Client(auth=('rzp_live_HGmBto0xC8WCRv','8TBgcTbNtQGj5sKZxLlvzJ7g'))
                 response_payment = client.order.create(dict(amount=amount,
                                                         currency='INR'))
                 print(response_payment)
