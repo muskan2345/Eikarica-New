@@ -12,9 +12,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <title>{% block title %}{{ product.title }} | EIKARICA{% endblock %}</title>
+        <title>{% block title %}{{ product.title }} | {% endblock %}</title>
         <link rel="stylesheet" href="{% static 'styles/product.css' %}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Otomanopee+One&display=swap" rel="stylesheet">
     
         <script src="{% static 'scripts/product.js' %}"></script>
     
@@ -34,7 +35,7 @@
 
         <!-- card right -->
         <div class = "product-content">
-            <h2 class = "product-title">{{ product.title }}</h2>
+            <h2 class = "product-title" style="font-family: 'Otomanopee One', sans-serif;">{{ product.title }}</h2>
             <a href = "{% url 'frontpage' %}" class = "product-link">Visit Store</a>
             <!-- <div class="rating">
                 <i class="fa fa-star"></i>
@@ -89,7 +90,11 @@
     {% if similar_products %}
     <hr>
     <div class="related">
-        <h2>Related Items</h2>
+        <div class="row animate-box">
+            <div class="col-md-8 col-md-offset-2 text-center fh5co-heading" >
+                <h3 style="font-family: 'Otomanopee One', sans-serif; font-size: 1.5rem;">Related Products.</h3>
+            </div>
+        </div>
         <div class="row">
             {% for product in similar_products %}
                 {% include 'product/parts/list_item.html' %}

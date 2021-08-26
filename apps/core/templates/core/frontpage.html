@@ -14,6 +14,18 @@
 		<div class="flexslider js-fullheight">
 			<ul class="slides">
 
+			<li style="background-image: url(/static/images/ki.jpg);">
+				<div class="container">
+					<div class="col-md-6 col-md-offset-3 col-md-pull-3 js-fullheight slider-text">
+						<div class="slider-text-inner">
+							<div class="desc">
+								<h2>Kitchenware</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+
 			<li style="background-image: url(/static/images/s.jpg);">
 				<div class="container">
 					<div class="col-md-6 col-md-offset-3 col-md-pull-3 js-fullheight slider-text">
@@ -112,64 +124,28 @@
 					</div>
 				</div>
 			</li>
-
-			<li style="background-image: url(/static/images/ki.jpg);">
-				<div class="container">
-					<div class="col-md-6 col-md-offset-3 col-md-pull-3 js-fullheight slider-text">
-						<div class="slider-text-inner">
-							<div class="desc">
-								<h2>Kitchenware</h2>
-							</div>
-						</div>
-					</div>
-				</div>
-			</li>
 			</ul>
 		</div>
 	</aside>
-	
-    <div class="columns is-multiline mb-6">
-        <div class="column is-12 has-text-centered mt-6 mb-6">
-            <h2 class="is-size-3" style="font-family: 'Otomanopee One', sans-serif;">Newest products</h2>
-        </div>
-
-        {% for product in newest_products %}
-            {% include 'product/parts/list_item.html' %}
-        {% endfor %}
-    </div>
-
-	
-
-    <!-- <div id="fh5co-services" class="fh5co-bg-section">
+	<!-- added design to produts display -->
+	<div id="fh5co-product" style="background: #20dbc2">
 		<div class="container">
-			<div class="row">
-				<div class="col-md-4 col-sm-4 text-center">
-					<div class="feature-center animate-box" data-animate-effect="fadeIn">
-						<span class="icon">
-							<i class="icon-credit-card"></i>
-						</span>
-						<h3>Credit Card</h3>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-4 text-center">
-					<div class="feature-center animate-box" data-animate-effect="fadeIn">
-						<span class="icon">
-							<i class="icon-wallet"></i>
-						</span>
-						<h3>Save Money</h3>
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-4 text-center">
-					<div class="feature-center animate-box" data-animate-effect="fadeIn">
-						<span class="icon">
-							<i class="icon-paper-plane"></i>
-						</span>
-						<h3>Free Delivery</h3>
-					</div>
+
+			<div class="row animate-box">
+				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading" >
+					<h2 style="font-family: 'Otomanopee One', sans-serif;">Products.</h2>
+					<p>Latest Brand Products</p>
 				</div>
 			</div>
-		</div>
-	</div> -->
+
+			<div class="row">
+					{% for product in newest_products %}
+						{% include 'product/parts/list_item.html' %}
+					{% endfor %}
+			</div>
+
+		</div> 
+	</div>	
 
     <div id="fh5co-testimonial" class="fh5co-bg-section">
 		<div class="container">

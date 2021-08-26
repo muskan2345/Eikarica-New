@@ -12315,7 +12315,7 @@ h1, h2, h3, h4, h5, h6, figure {
   opacity: 1;
 }
 .product:hover .desc h3 a, .product:focus .desc h3 a {
-  color: #20dbc2;
+  color: #3b6e68;
 }
 
 .product-carousel {
