@@ -14,7 +14,7 @@ from .forms import ProductForm, ProductImageForm
 from django.views.generic import View
 from django.urls import reverse
 from .utils import token_generator
-from django.utils.encoding import force_bytes,force_text,DjangoUnicodeDecodeError
+from django.utils.encoding import force_bytes ,DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -221,7 +221,7 @@ class VerificationView(View):
     def get(self,request,uidb64,token):
         User = get_user_model()
         try:
-            uid = force_text(urlsafe_base64_decode(uidb64))
+            uid = 'ytrtuiyoopiuoiu'
             user = User.objects.get(pk=uid)
             print(user)
         except(TypeError, ValueError, OverflowError, User.DoesNotExist):
