@@ -3,9 +3,13 @@ from django.urls import path,include
 from apps.core.views import frontpage
 from . import views
 from django.views.generic import TemplateView
-from .views import VerificationView
+from .views import VerificationView, ChangePassword
+
+
 urlpatterns = [
     path('become-vendor/', views.become_vendor, name='become_vendor'),
+    path('become-vendor/', views.become_vendor_otp, name='become_vendor'),
+    path('verification_otp/<uidb64>',views.verification_otp,name='verification_otp'),
     path('vendor-admin/', views.vendor_admin, name='vendor_admin'),
     path('add-product/', views.add_product, name='add_product'),
     path('edit-vendor/', views.edit_vendor, name='edit_vendor'),
@@ -22,10 +26,15 @@ urlpatterns = [
     path('vendor-kyc/', views.vendor_kyc, name='vendor_kyc'),
     path('coming-soon/', views.coming_soon, name='coming_soon'),
     #path('',views.confirm,name='confirm'),
-    path('activate/<uidb64>/<token>',VerificationView.as_view(),name='activate'),
+
+    # authentication while sign up and forget password
+    path('activate/<uidb64>/<token>',VerificationView.as_view(), name='activate'),
+    path('change-password/<uidb64>', ChangePassword, name='change_password'),
+    path('forget-password/', views.forget_password, name='forget_password')
 
 
+    #authentication via sending otp
 
-      #path('', include('apps.core.urls')),
+
 
 ]

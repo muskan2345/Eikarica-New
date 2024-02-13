@@ -75,7 +75,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.twitter',
     'allauth.socialaccount.providers.linkedin',
-    
+
 ]
 
 MIDDLEWARE = [
@@ -86,6 +86,17 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.BCryptPasswordHasher',
+    'django.contrib.auth.hashers.SHA1PasswordHasher',
+    'django.contrib.auth.hashers.MD5PasswordHasher',
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    # Add or reorder hashers as needed
 ]
 
 ROOT_URLCONF = 'interiorshop.urls'
@@ -108,13 +119,13 @@ TEMPLATES = [
     },
 ]
 # AUTHENTICATION_BACKENDS = [
-    
+
 #     # Needed to login by username in Django admin, regardless of `allauth`
 #     'django.contrib.auth.backends.ModelBackend',
 
 #     # `allauth` specific authentication methods, such as login by e-mail
 #     'allauth.account.auth_backends.AuthenticationBackend',
-    
+
 # ]
 
 
@@ -126,9 +137,18 @@ WSGI_APPLICATION = 'interiorshop.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR / 'db.sqlite3'),
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR / 'db.sqlite3'),
+    # }
+
+'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'Eikarica',
+        'USER': 'postgres',
+        'PASSWORD': 'muskan',
+        'HOST': 'localhost',
+        'PORT': '5433',
     }
 }
 
