@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='vendor',
             name='password',
-            field=models.CharField(default=django.utils.timezone.now, max_length=15),
+            field=models.CharField(default=django.utils.timezone.now, max_length=100),
             preserve_default=False,
         ),
     ]

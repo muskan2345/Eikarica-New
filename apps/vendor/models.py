@@ -11,18 +11,20 @@ class Vendor(models.Model):
     #full name of the vendor as per documents
     fullname = models.CharField(max_length=255, default='null')
     email = models.EmailField(unique=True, default='null')
-    password = models.CharField(max_length=15)
-    #rpassword=models.CharField(max_length=15,null=False)
+    password = models.CharField(max_length=100)
+    #rpassword=models.CharField(max_length=100,null=False)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.OneToOneField(User, related_name='vendor', on_delete=models.CASCADE)
     gender = models.CharField(max_length=10, default='null')
-    dob = models.CharField(max_length=15, default='null')
+    dob = models.CharField(max_length=100, default='null')
     nationality = models.CharField(max_length=100, default='null')
     address = models.CharField(null=True, max_length=300, default='null')
     mobile = models.IntegerField(default=0)
     idType = models.CharField(max_length=100, default='null')
     idFile = models.FileField(upload_to='static/uploads', blank=True, null=True)
     verified = models.BooleanField(default=False)
+    phone_number = models.CharField(max_length=15,null=True,blank=True)
+    otp = models.CharField(max_length=100, null=True, blank=True)
 
     USERNAME_FIELD = 'name'
 
@@ -43,9 +45,10 @@ class Vendor(models.Model):
 class Customer(models.Model):
     name = models.CharField(max_length=255)
     email = models.EmailField(unique=True, default='null')
-    password = models.CharField(max_length=15)
+    password = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.OneToOneField(User, related_name='customer', on_delete=models.CASCADE)
+    otp = models.CharField(max_length=100, null=True, blank=True)
     
 
     USERNAME_FIELD='name'

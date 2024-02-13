@@ -27,6 +27,17 @@ input {
   left: 0;
 }
 
+  .button {
+        display: flex; /* Use flexbox */
+        justify-content: space-between; /* Space items evenly */
+        width: 300px; /* Adjust width as needed */
+        margin: auto; /* Center align */
+    }
+
+    .btn {
+        flex: 1; /* Make both buttons take equal space */
+    }
+
 .signin-signup {
   position: absolute;
   top: 50%;

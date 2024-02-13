@@ -5,6 +5,8 @@ from django.utils.text import slugify
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
+
+from .helper import generate_sixdigit_otp
 from .models import Vendor,Customer
 from apps.product.models import Product, ProductImage,Category
 from django.contrib.auth.models import User
@@ -16,6 +18,9 @@ from django.urls import reverse
 from .utils import token_generator
 from django.utils.encoding import force_bytes ,DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import check_password
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 
@@ -30,17 +35,19 @@ def confirm(request):
     return redirect('vendor_kyc')
 
 
-
 def user_login(request,*args,**kwargs):
     
     if request.method == 'POST':
         # First get the username and password supplied
         username = request.POST.get('username')
+
         password = request.POST.get('password')
+        hashed_password = make_password(password)
+        is_password_valid = check_password(password, hashed_password)
         loginid = request.POST.get('loginid')
 
         User = get_user_model()
-        print(User)
+        print(User.first_name)
         try:
             user = User.objects.get(username=username)
             print(user)
@@ -58,10 +65,6 @@ def user_login(request,*args,**kwargs):
         # If we have a user
         if loginid == "vendor":
             if user:
-            #     #Check it the account is active
-            #     if request.user.is_active:
-            #         # Log the user in.
-
                     login(request,user)
                     try:
                         request.user.vendor
@@ -71,21 +74,12 @@ def user_login(request,*args,**kwargs):
                     # if(vendor.verified==True):
                     #     return redirect('vendor_admin')
                     return redirect('vendor_admin')
-                    # Send the user back to some page.
-                    # In this case their homepage.
-                    #return HttpResponseRedirect(reverse('core/frontpage.html'))
-                # else:
-                    # If account is not active:
-                    # return HttpResponse("Your account is not active.")
             else:
                 messages.error(request,'username or password not correct')
                 return redirect('user_login')
         else:
             #return redirect('coming_soon')
             if user:
-            #     #Check it the account is active
-            #     if user.is_active:
-                    # Log the user in.
                     login(request,user)
                     try:
                         request.user.customer
@@ -108,10 +102,13 @@ def user_login(request,*args,**kwargs):
         #Nothing has been provided for username or password.
         return render(request, 'vendor/login.html', {})
 
+
+#  became vendor using email link
 def become_vendor(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
+        hashed_password = make_password(password)
         loginid = request.POST.get('loginid')
         # password2 = request.POST.get('confirm_password')
         name = request.POST.get('username')
@@ -129,16 +126,19 @@ def become_vendor(request):
                 if loginid == "vendor":
                     # raw_password = password1
                     user = User.objects.create_user(name, email, password)
+                    print(user)
                     uidb64=urlsafe_base64_encode(force_bytes(user.pk))
                     # domain=get_current_site(request).domain
-                    domain='www.eikarica.techmihirnaik.in'
+                   # domain='www.eikarica.techmihirnaik.in'
+                    domain = "127.0.0.1:8000"
+
                     link=reverse('activate',kwargs={'uidb64':uidb64,'token': token_generator.make_token(user)})
                     email_subject='Signed up successfully'
-                    activate_url='https://'+ domain+ link
+                    activate_url='http://'+ domain+ link
                     email_body= "Hii " + name + "\nPlease use this link to verify your account\n" + activate_url
-                    user.is_active = False
+                    user.is_active = True
                     user.save()
-                    vendor = Vendor(name=name, email=email, password=password, created_by=user)
+                    vendor = Vendor(name=name, email=email, password=hashed_password, created_by=user, verified=True)
                     # current_site = get_current_site(request)
                     # email_body = render_to_string('vendor/email_template.html')
                     email=EmailMessage (
@@ -164,13 +164,13 @@ def become_vendor(request):
                     # )
 
                     # email.send(fail_silently=False)
-                    
+
                     # if(vendor.verified==True):
                     #     return redirect('add_product')
                     messages.error(request,'Sign-up successful, check your email for further instructions!')
                     return redirect('user_login')
                 else:
-                    cus= User.objects.create_user(name, email, password)
+                    cus= User.objects.create_user(name, email, hashed_password)
                     uidb64=urlsafe_base64_encode(force_bytes(cus.pk))
                     # domain=get_current_site(request).domain
                     domain='www.eikarica.techmihirnaik.in'
@@ -180,7 +180,7 @@ def become_vendor(request):
                     email_body= "Hii " + name + "\nPlease use this link to verify your account\n" + activate_url
                     cus.is_active = False
                     cus.save()
-                    customer = Customer(name=name, email=email, password=password, created_by=cus)
+                    customer = Customer(name=name, email=email, password=hashed_password, created_by=cus)
                     # current_site = get_current_site(request)
                     # email_body = render_to_string('vendor/email_template.html')
                     email=EmailMessage (
@@ -190,38 +190,131 @@ def become_vendor(request):
                        [email],
                     )
                     email.send(fail_silently=False)
-                    # if User.objects.filter(name = name).first():
-                    #     messages.error(request, "This username is already taken")
-                    #     return HttpResponse("Invalid signup details supplied.")
                     customer.save()
-
-                    # uidb64=force_bytes(urlsafe_based64_encode(user.pk))
-                    # activate_url='http://'+domain+link
-                    # email=EmailMessage (
-                    #    email_subject,
-                    #    email_body,
-                    #    'eikaricatmn@gmail.com',
-                    #    [email],
-
-                    # )
-
-                    # email.send(fail_silently=False)
-                    
-                    # if(vendor.verified==True):
-                    #     return redirect('add_product')
                     messages.error(request,'Sign-up successful, check your email for further instructions!')
                     return redirect('user_login')
     return render(request, 'vendor/login.html', {})
 
+
+# became vendor /authenticating via otp
+def become_vendor_otp(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        hashed_password = make_password(password)
+        loginid = request.POST.get('loginid')
+        # password2 = request.POST.get('confirm_password')
+        name = request.POST.get('username')
+        try:
+            User.objects.get(username=name)
+            messages.error(request, 'Username is already taken')
+            return redirect('become_vendor')
+        except:
+            try:
+                User.objects.get(email=email)
+                messages.error(request, 'Email is already taken')
+                return redirect('become_vendor')
+                # return render(request, 'vendor/login.html#sign-up', {})
+            except:
+                if loginid == "vendor":
+                    # raw_password = password1
+                    user = User.objects.create_user(name, email, password)
+                    print(user)
+                    uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+                    domain = "127.0.0.1:8000"
+
+                   # link = reverse('activate', kwargs={'uidb64': uidb64, 'token': token_generator.make_token(user)})
+
+                    email_subject = 'Signed up successfully'
+                  #  activate_url = 'http://' + domain
+                    user_otp= generate_sixdigit_otp()
+
+                    email_body = "Hii " + name + "\nPlease use this OTP to verify your account\n" + user_otp
+                    # user.is_active = True
+                    user.save()
+                    vendor = Vendor(name=name, email=email, password=hashed_password, created_by=user, verified=True,otp=user_otp)
+                    # current_site = get_current_site(request)
+                    # email_body = render_to_string('vendor/email_template.html')
+                    email = EmailMessage(
+                        email_subject,
+                        email_body,
+                        'eikaricatmn@gmail.com',
+                        [email],
+                    )
+                    email.send(fail_silently=False)
+                    vendor.save()
+                    link = reverse('verification_otp', kwargs={'uidb64': uidb64})
+                    messages.error(request, 'Sign-up successful, check your email for further instructions!')
+                    return redirect(link)
+                else:
+                    cus = User.objects.create_user(name, email, hashed_password)
+                    uidb64 = urlsafe_base64_encode(force_bytes(cus.pk))
+                    # domain=get_current_site(request).domain
+                    domain = "127.0.0.1:8000"
+
+                    email_subject = 'Signed up successfully'
+                    user_otp = generate_sixdigit_otp()
+                    #activate_url = 'https://' + domain + link
+                    email_body = "Hii " + name + "\nPlease use this OTP to verify your account\n" + user_otp
+                    #cus.is_active = False
+                    cus.save()
+                    customer = Customer(name=name, email=email, password=hashed_password, created_by=cus,otp=user_otp)
+                    # current_site = get_current_site(request)
+                    # email_body = render_to_string('vendor/email_template.html')
+                    email = EmailMessage(
+                        email_subject,
+                        email_body,
+                        'eikaricatmn@gmail.com',
+                        [email],
+                    )
+                    email.send(fail_silently=False)
+                    customer.save()
+                    messages.error(request, 'Sign-up successful, check your email for further instructions!')
+                    link = reverse('verification_otp', kwargs={'uidb64': uidb64})
+                    return redirect(link)
+    return render(request, 'vendor/login.html', {})
+
+
+def verification_otp(request,uidb64):
+    if request.method == "POST":
+        otp=request.POST.get('otp')
+        if otp:
+            print(otp)
+            try:
+                uid = urlsafe_base64_decode(uidb64)
+                user = User.objects.get(pk=uid)
+                user_obj = User.objects.filter(email=user.email).first()
+                if user_obj:
+                    if user_obj.vendor.otp==otp:
+                        user_obj.is_active=True
+                        user_obj.save()
+                        messages.error(request, 'OTP is verified Successfully')
+                        return redirect('user_login')
+
+
+            except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+                user = None
+                messages.error(request, 'User not Found')
+
+        else:
+            messages.error(request , 'Password did not matched')
+    return render(request, 'vendor/verification_otp.html')
+
+
 def coming_soon(request):
     return render(request, 'vendor/coming_soon.html',{})
+
+
+
+
+
 
 
 class VerificationView(View):
     def get(self,request,uidb64,token):
         User = get_user_model()
         try:
-            uid = 'ytrtuiyoopiuoiu'
+            uid = urlsafe_base64_decode(uidb64)
             user = User.objects.get(pk=uid)
             print(user)
         except(TypeError, ValueError, OverflowError, User.DoesNotExist):
@@ -233,6 +326,34 @@ class VerificationView(View):
             return redirect('user_login')
         else:
             return HttpResponse('Activation link is invalid!')
+
+def ChangePassword(request,uidb64):
+    if request.method=="POST":
+        User = get_user_model()
+        password = request.POST.get('rpassword')
+        confirm_password = request.POST.get('confirm_password')
+        if password == confirm_password:
+
+            try:
+                uid = urlsafe_base64_decode(uidb64)
+                user = User.objects.get(pk=uid)
+                user_obj = User.objects.filter(email=user.email).first()
+                if user_obj:
+                    new_password = make_password(confirm_password)
+                    user_obj.password = new_password
+                    user_obj.save()
+                    messages.error(request, 'Password Changed Successfully')
+                    return redirect('user_login')
+
+            except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+                user = None
+                messages.error(request, 'User not Found')
+
+        else:
+            messages.error(request , 'Password did not matched')
+    return render(request, 'vendor/forget_password.html')
+
+
 
 
 @login_required
@@ -349,7 +470,8 @@ def edit_product(request,pk):
     form = ProductForm(instance=product) 
     print('terminate') 
     return render(request, 'vendor/edit_product.html',{'form':form, 'product': product}) 
-    #return render(request, 'vendor/edit_product.html',{'form':form,}) 
+    #return render(request, 'vendor/edit_product.html',{'form':form,})
+
 
 @login_required
 def delete_product(request,pk):
@@ -375,6 +497,8 @@ def edit_vendor(request):
         name = request.POST.get('name')
         email = request.POST.get('email')
         password = request.POST.get('password')
+        # hashed_password = make_password(password)
+        # is_password_valid = check_password(password, hashed_password)
         rpassword=request.POST.get('rpassword')
         confirm_password=request.POST.get('confirm_password')
         fullname = vendor.fullname
@@ -394,7 +518,8 @@ def edit_vendor(request):
                 #user_login(name,email,)
                 vendor.created_by.delete()
                 user = User.objects.create_user(name, email, rpassword)
-                vendor = Vendor(name=name, email=email, password=rpassword, created_by=user)
+                hashed_password = make_password(rpassword)
+                vendor = Vendor(name=name, email=email, password=hashed_password, created_by=user)
                 vendor.fullname = fullname
                 vendor.gender = gender
                 vendor.dob = dob
@@ -420,6 +545,36 @@ def edit_vendor(request):
     
     return render(request, 'vendor/edit_vendor.html', {'vendor':vendor})
     #return render(request, 'vendor/edit_vendor.html', {})
+
+
+def forget_password(request,*args,**kwargs):
+    # vendor = request.user.vendor
+    if request.method=='POST':
+        email=request.POST.get('email')
+        user_obj = User.objects.filter(email=email).first()
+        if user_obj:
+            uidb64 = urlsafe_base64_encode(force_bytes(user_obj.pk))
+            # domain=get_current_site(request).domain
+            domain = "127.0.0.1:8000"
+            link = reverse('change_password', kwargs={'uidb64': uidb64})
+            email_subject = 'Change your password'
+            activate_url = 'http://' + domain + link
+            email_body = "Hii " + email + "\nPlease use this link to change  your password\n" + activate_url
+            email = EmailMessage(
+                email_subject,
+                email_body,
+                'eikaricatmn@gmail.com',
+                [user_obj.email],
+            )
+            email.send(fail_silently=False)
+            messages.error(request, 'Email send successfully Please Check your mail')
+        else:
+            messages.error(request, 'User not found')
+    return render(request, 'vendor/change_password.html')
+
+
+
+
 
 def edit_customer(request):
     try:
