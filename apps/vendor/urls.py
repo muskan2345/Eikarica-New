@@ -7,7 +7,7 @@ from .views import VerificationView, ChangePassword
 
 
 urlpatterns = [
-    path('become-vendor/', views.become_vendor, name='become_vendor'),
+    # path('become-vendor/', views.become_vendor, name='become_vendor'),
     path('become-vendor/', views.become_vendor_otp, name='become_vendor'),
     path('verification_otp/<uidb64>',views.verification_otp,name='verification_otp'),
     path('vendor-admin/', views.vendor_admin, name='vendor_admin'),
@@ -34,7 +34,5 @@ urlpatterns = [
 
 
     #authentication via sending otp
-
-
 
 ]

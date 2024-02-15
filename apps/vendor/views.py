@@ -89,10 +89,8 @@ def user_login(request,*args,**kwargs):
                     # Send the user back to some page.
                     # In this case their homepage.
                     return redirect('frontpage')
-                    #return HttpResponseRedirect(reverse('core/frontpage.html'))
-                # else:
-                #     # If account is not active:
-                #     return HttpResponse("Your account is not active.")
+
+
             else:
                 messages.error(request,'username or password not correct')
                 return redirect('user_login')
@@ -170,7 +168,7 @@ def become_vendor(request):
                     messages.error(request,'Sign-up successful, check your email for further instructions!')
                     return redirect('user_login')
                 else:
-                    cus= User.objects.create_user(name, email, hashed_password)
+                    cus= User.objects.create_user(name, email, password)
                     uidb64=urlsafe_base64_encode(force_bytes(cus.pk))
                     # domain=get_current_site(request).domain
                     domain='www.eikarica.techmihirnaik.in'
@@ -230,7 +228,7 @@ def become_vendor_otp(request):
                     user_otp= generate_sixdigit_otp()
 
                     email_body = "Hii " + name + "\nPlease use this OTP to verify your account\n" + user_otp
-                    # user.is_active = True
+                    user.is_active = True
                     user.save()
                     vendor = Vendor(name=name, email=email, password=hashed_password, created_by=user, verified=True,otp=user_otp)
                     # current_site = get_current_site(request)
@@ -247,7 +245,7 @@ def become_vendor_otp(request):
                     messages.error(request, 'Sign-up successful, check your email for further instructions!')
                     return redirect(link)
                 else:
-                    cus = User.objects.create_user(name, email, hashed_password)
+                    cus = User.objects.create_user(name, email, password)
                     uidb64 = urlsafe_base64_encode(force_bytes(cus.pk))
                     # domain=get_current_site(request).domain
                     domain = "127.0.0.1:8000"
@@ -256,7 +254,7 @@ def become_vendor_otp(request):
                     user_otp = generate_sixdigit_otp()
                     #activate_url = 'https://' + domain + link
                     email_body = "Hii " + name + "\nPlease use this OTP to verify your account\n" + user_otp
-                    #cus.is_active = False
+                    cus.is_active = True
                     cus.save()
                     customer = Customer(name=name, email=email, password=hashed_password, created_by=cus,otp=user_otp)
                     # current_site = get_current_site(request)
@@ -285,11 +283,19 @@ def verification_otp(request,uidb64):
                 user = User.objects.get(pk=uid)
                 user_obj = User.objects.filter(email=user.email).first()
                 if user_obj:
-                    if user_obj.vendor.otp==otp:
+                    try:
+                        user=user_obj.vendor
+                    except:
+                        pass
+                        user=user_obj.customer
+                    if user.otp==otp:
                         user_obj.is_active=True
                         user_obj.save()
-                        messages.error(request, 'OTP is verified Successfully')
+                        messages.error(request , 'User is verified Successfully')
                         return redirect('user_login')
+                    messages.error(request, 'OTP not Found')
+
+
 
 
             except(TypeError, ValueError, OverflowError, User.DoesNotExist):

@@ -92,13 +92,6 @@ def payment(request):
                 response_payment = client.order.create(dict(amount=amount,
                                                         currency='INR'))
                 print(response_payment)
-                # request.session['first_name'] = form.cleaned_data['first_name']
-                # request.session['last_name'] = form.cleaned_data['last_name']
-                # request.session['email'] = form.cleaned_data['email']
-                # request.session['phone'] = form.cleaned_data['phone']
-                # request.session['address'] = form.cleaned_data['address']
-                # request.session['zipcode'] = form.cleaned_data['zipcode']
-                # request.session['place'] = form.cleaned_data['place']
 
                 first_name = form.cleaned_data['first_name']
                 last_name = form.cleaned_data['last_name']
